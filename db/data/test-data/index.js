@@ -1,1 +1,9 @@
+exports.card_pack = require("./card_pack.js");
+exports.games = require("./games.js");
+exports.message_activity = require("./message_activity.js");
+exports.study_group.js = require("./study_group.js");
+exports.topics = require("./topics.js");
+exports.education_level = require("./education_level.js");
+exports.scoreboard = require("./scoreboard.js");
+exports.subjects = require("./subjects.js");
 exports.users = require("./users.js");
