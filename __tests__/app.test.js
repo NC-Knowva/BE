@@ -22,7 +22,6 @@ describe.skip("GET /api/users", () => {
     const expectedUser = {
       username: expect.any(String),
       name: expect.any(String),
-      password: expect.any(String),
       email: expect.any(String),
       avatar_img_url: expect.any(String),
       education_id: expect.any(String),
