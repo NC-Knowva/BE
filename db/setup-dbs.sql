@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS nc_knowva;
+CREATE DATABASE nc_knowva;
+
+DROP DATABASE IF EXISTS nc_knowva_test;
+CREATE DATABASE nc_knowva_test;
