@@ -7,7 +7,7 @@ const db = require("../db/connection");
 beforeEach(() => seed(data));
 afterAll(() => db.end());
 
-describe.skip("ALL /notAPath", () => {
+describe("ALL /notAPath", () => {
   test("404: Responds with 'Invalid URL' when attempting to access a non-existent endpoint", () => {
     return request(app).get("/notAPath")
     .expect(404)
@@ -17,7 +17,7 @@ describe.skip("ALL /notAPath", () => {
   });
 });
 
-describe.skip("GET /api/users", () => {
+describe("GET /api/users", () => {
   test("200: Responds with all users", () => {
     const expectedUser = {
       username: expect.any(String),
