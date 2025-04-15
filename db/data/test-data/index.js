@@ -7,3 +7,4 @@ exports.education_level = require("./education_level.js");
 exports.scoreboard = require("./scoreboard.js");
 exports.subjects = require("./subjects.js");
 exports.users = require("./users.js");
+exports.user_group_junction = require("./user_group_junction.js");
