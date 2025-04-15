@@ -1,17 +1,15 @@
-const db = require('../db/connection');
-const seed = require('../db/seeds/seed');
-
-
+const db = require("../db/connection");
+const seed = require("../db/seeds/seed");
 
 beforeAll(() => seed());
 afterAll(() => db.end());
 
-describe('seed',()=>{
-describe('games table',()=>{
-    test('games table exists',()=>{
-        return db
+describe("seed", () => {
+  describe("games table", () => {
+    test("games table exists", () => {
+      return db
         .query(
-            `SELECT EXISTS (
+          `SELECT EXISTS (
                 SELECT FROM 
                     information_schema.tables 
                 WHERE 
@@ -19,17 +17,19 @@ describe('games table',()=>{
                 );`
         )
         .then(({ rows: [{ exists }] }) => {
-            expect(exists).toBe(true);
-          });
-    })
-    test('games table has game_name column as varchar',()=>{
-        return db.query(
-            `SELECT *
+          expect(exists).toBe(true);
+        });
+    });
+    test("games table has game_name column as varchar", () => {
+      return db
+        .query(
+          `SELECT *
                     FROM information_schema.columns
                     WHERE table_name = 'games'
                     AND column_name = 'game_name';`
         )
         .then(({ rows: [column] }) => {
+
             expect(column.column_name).toBe('game_name');
             expect(column.data_type).toBe('character varying');
           });
@@ -51,12 +51,12 @@ describe('games table',()=>{
 })
 
 
-///////education level
-describe('education_level table',()=>{
-    test('education_level table exists',()=>{
-        return db
+  ///////education level
+  describe("education_level table", () => {
+    test("education_level table exists", () => {
+      return db
         .query(
-            `SELECT EXISTS (
+          `SELECT EXISTS (
                 SELECT FROM 
                     information_schema.tables 
                 WHERE 
@@ -96,23 +96,25 @@ describe('education_level table',()=>{
     test('education_level table has description column as text',()=>{
         return db.query(
             `SELECT column_name, data_type
+
                     FROM information_schema.columns
                     WHERE table_name = 'education_level'
                     AND column_name = 'description';`
         )
         .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('description');
-            expect(column.data_type).toBe('character varying');
-          });
-    })
-})
+          expect(column.column_name).toBe("description");
+          expect(column.data_type).toBe("character varying");
+        });
+    });
+  });
+
 
 //users
 describe('users table',()=>{
     test('users table exists',()=>{
         return db
         .query(
-            `SELECT EXISTS (
+          `SELECT EXISTS (
                 SELECT FROM 
                     information_schema.tables 
                 WHERE 
@@ -154,6 +156,7 @@ describe('users table',()=>{
     test('users table has password column as bigint',()=>{
         return db.query(
             `SELECT *
+
                     FROM information_schema.columns
                     WHERE table_name = 'users'
                     AND column_name = 'password';`
@@ -178,18 +181,6 @@ describe('users table',()=>{
           });
     })
 
-    test('users table has password column as bigint',()=>{
-        return db.query(
-            `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'users'
-                    AND column_name = 'password';`
-        )
-        .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('password');
-            expect(column.data_type).toBe('bigint');
-          });
-    })
 
     test('users table has email column as varchar',()=>{
         return db.query(
@@ -497,8 +488,5 @@ describe('topics',()=>{
             expect(column.data_type).toBe('bigint');
           });
     })  
-
-
 })
-
 })
