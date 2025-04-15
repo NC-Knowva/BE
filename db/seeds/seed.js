@@ -73,7 +73,37 @@ const seed = () => {
             subject_id BIGINT REFERENCES subjects(subject_id)
             );`)                  
     }) 
-  
+    .then(()=>{
+        return db.query(`CREATE TABLE study_group (
+            group_name VARCHAR PRIMARY KEY,
+            admins JSON,
+            users JSON,
+            topic_id BIGINT REFERENCES topics(topic_id),
+            avatar_img_url TEXT
+            );`)                  
+    }) 
+    .then(()=>{
+        return db.query(`CREATE TABLE card_pack (
+            pack_id BIGINT PRIMARY KEY,
+            username VARCHAR(50),
+            topic_id BIGINT,
+            name BIGINT,
+            description TEXT,
+            education_id VARCHAR(50) REFERENCES education_level(education_id),
+            visibility BIGINT,
+            questions JSON
+            );`)                  
+    }) 
+    .then(()=>{
+        return db.query(`CREATE TABLE scoreboard (
+            score_id BIGINT PRIMARY KEY,
+            username VARCHAR(50),
+            game_name VARCHAR(300) REFERENCES games(game_name),
+            topic_id BIGINT,
+            subject_id BIGINT,
+            score JSON
+            );`)                  
+    }) 
 
 
 }
