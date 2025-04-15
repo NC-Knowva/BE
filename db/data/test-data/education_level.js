@@ -1,6 +1,8 @@
 module.exports = [
   {
-    education_id: "3",
-    description: "A Level",
+    education: "1"
   },
+  {
+    education: "2"
+  }
 ];
