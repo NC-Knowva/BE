@@ -6,4 +6,4 @@ exports.study_group = require("./study_group");
 exports.subjects = require("./subjects");
 exports.topics = require("./topics");
 exports.users = require("./users");
-
+exports.user_group_junction = require("./user_group_junction.js");
