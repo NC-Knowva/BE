@@ -52,7 +52,7 @@ module.exports = [
         description: "gain the math boss title",
         questions: [
             {
-                "Q1": "sin(45)",
+                Q1: "sin(45)",
                 "A1": "√2/2 or 1/√2"
             },
             {
