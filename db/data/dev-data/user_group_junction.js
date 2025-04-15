@@ -1,0 +1,19 @@
+module.exports = [
+  { username: "study_basher", group: "make college easier", role: "admin" },
+  { username: "jodie_H", group: "make college easier", role: "member" },
+  { username: "your_fav_ai", group: "make college easier", role: "member" },
+  { username: "grades-smasher", group: "make college easier", role: "member" },
+  { username: "iheartsocio", group: "make college easier", role: "member" },
+
+  { username: "kathy2008", group: "maths help", role: "admin" },
+  { username: "boss_bernard", group: "maths help", role: "member" },
+  { username: "studywithEM", group: "maths help", role: "member" },
+  { username: "grades-smasher", group: "maths help", role: "member" },
+
+  { username: "boss_bernard", group: "lock in sesh", role: "admin" },
+  { username: "study_basher", group: "lock in sesh", role: "member" },
+  { username: "jodie_H", group: "lock in sesh", role: "member" },
+  { username: "grades-smasher", group: "lock in sesh", role: "member" },
+  { username: "studywithEM", group: "lock in sesh", role: "member" },
+  { username: "kathy2008", group: "lock in sesh", role: "member" },
+];
