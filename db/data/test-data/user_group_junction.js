@@ -1,0 +1,37 @@
+module.exports = [
+  { username: "tfolbigg3", group: "Colobus", role: "member" },
+  { username: "lgurrado4", group: "Colobus", role: "member" },
+  { username: "acranham7", group: "Colobus", role: "member" },
+  { username: "eforgan9", group: "Colobus", role: "admin" },
+  { username: "ktrevaskiss6", group: "Colobus", role: "member" },
+  { username: "ogladyer1", group: "Colobus", role: "member" },
+  { username: "egirardini5", group: "Colobus", role: "member" },
+  { username: "ggrishinov2", group: "Colobus", role: "member" },
+
+  { username: "aclaricoats0", group: "Bird", role: "member" },
+  { username: "ogladyer1", group: "Bird", role: "member" },
+  { username: "klease8", group: "Bird", role: "member" },
+  { username: "ktrevaskiss6", group: "Bird", role: "member" },
+  { username: "eforgan9", group: "Bird", role: "admin" },
+  { username: "lgurrado4", group: "Bird", role: "member" },
+  { username: "acranham7", group: "Bird", role: "member" },
+  { username: "ggrishinov2", group: "Bird", role: "member" },
+  { username: "egirardini5", group: "Bird", role: "member" },
+
+  { username: "ogladyer1", group: "Peregrine falcon", role: "admin" },
+  { username: "egirardini5", group: "Peregrine falcon", role: "member" },
+  { username: "ktrevaskiss6", group: "Peregrine falcon", role: "member" },
+
+  { username: "acranham7", group: "Capybara", role: "admin" },
+  { username: "ogladyer1", group: "Capybara", role: "member" },
+  { username: "lgurrado4", group: "Capybara", role: "member" },
+  { username: "klease8", group: "Capybara", role: "member" },
+  { username: "ggrishinov2", group: "Capybara", role: "member" },
+
+  { username: "acranham7", group: "Ringtail cat", role: "admin" },
+  { username: "ggrishinov2", group: "Ringtail cat", role: "member" },
+  { username: "egirardini5", group: "Ringtail cat", role: "member" },
+  { username: "lgurrado4", group: "Ringtail cat", role: "member" },
+  { username: "ogladyer1", group: "Ringtail cat", role: "member" },
+  { username: "ktrevaskiss6", group: "Ringtail cat", role: "member" },
+];
