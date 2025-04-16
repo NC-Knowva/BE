@@ -53,7 +53,7 @@ describe("seed", () => {
 
 
   ///////education level
-  describe.skip("education_level table", () => {
+  describe("education_level table", () => {
     test("education_level table exists", () => {
       return db
         .query(
@@ -111,7 +111,7 @@ describe("seed", () => {
 
 
 //users
-describe.skip('users table',()=>{
+describe('users table',()=>{
     test('users table exists',()=>{
         return db
         .query(
@@ -154,19 +154,19 @@ describe.skip('users table',()=>{
           });
         })
 
-    test('users table has password column as bigint',()=>{
-        return db.query(
-            `SELECT *
+    // test('users table has password column as bigint',()=>{
+    //     return db.query(
+    //         `SELECT *
 
-                    FROM information_schema.columns
-                    WHERE table_name = 'users'
-                    AND column_name = 'password';`
-        )
-        .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('password');
-            expect(column.data_type).toBe('bigint');
-          });
-    })
+    //                 FROM information_schema.columns
+    //                 WHERE table_name = 'users'
+    //                 AND column_name = 'password';`
+    //     )
+    //     .then(({ rows: [column] }) => {
+    //         expect(column.column_name).toBe('password');
+    //         expect(column.data_type).toBe('bigint');
+    //       });
+    // })
    
 
     test('users table has name column as varchar',()=>{
@@ -183,18 +183,18 @@ describe.skip('users table',()=>{
     })
 
 
-    test('users table has email column as varchar',()=>{
-        return db.query(
-            `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'users'
-                    AND column_name = 'email';`
-        )
-        .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('email');
-            expect(column.data_type).toBe('character varying');
-          });
-    })
+    // test('users table has email column as varchar',()=>{
+    //     return db.query(
+    //         `SELECT column_name, data_type
+    //                 FROM information_schema.columns
+    //                 WHERE table_name = 'users'
+    //                 AND column_name = 'email';`
+    //     )
+    //     .then(({ rows: [column] }) => {
+    //         expect(column.column_name).toBe('email');
+    //         expect(column.data_type).toBe('character varying');
+    //       });
+    // })
 
     test('users table has avatar_img_url column as varchar',()=>{
         return db.query(
@@ -251,7 +251,7 @@ describe.skip('users table',()=>{
         })    
     })
 
-describe.skip('message_activity',()=>{
+describe('message_activity',()=>{
 test('message_activity table exists',()=>{
     return db
     .query(
@@ -335,7 +335,7 @@ test('message_activity table has body column as text',()=>{
 
 })
 
-describe.skip('subjects',()=>{
+describe('subjects',()=>{
     test('subjects table exists',()=>{
     return db
     .query(
@@ -407,7 +407,7 @@ describe.skip('subjects',()=>{
     
 })
 
-describe.skip('topics',()=>{
+describe('topics',()=>{
     test('topics table exists',()=>{
         return db
     .query(
@@ -491,7 +491,7 @@ describe.skip('topics',()=>{
     })  
 })
 
-describe.skip('study_group',()=>{
+describe('study_group',()=>{
 
     test('study_group table exists',()=>{
         return db
@@ -591,7 +591,7 @@ describe.skip('study_group',()=>{
     }) 
 })
 
-describe.skip('card_pack',()=>{
+describe('card_pack',()=>{
     test('card_pack table exists',()=>{
         return db
     .query(
@@ -727,7 +727,7 @@ describe.skip('card_pack',()=>{
     })
 })
 
-describe.skip('scoreboard',()=>{
+describe('scoreboard',()=>{
     test('scoreboard table exists',()=>{
         return db
     .query(
@@ -841,7 +841,7 @@ describe.skip('scoreboard',()=>{
 })
 
 
-describe.skip('Data Insertion',()=>{
+describe('Data Insertion',()=>{
     test('games data has been inserted correctly', () => {
         return db.query(
             `SELECT * FROM games;`)
@@ -869,8 +869,6 @@ describe.skip('Data Insertion',()=>{
           users.forEach((user) => {
             expect(user).toHaveProperty('username');
             expect(user).toHaveProperty('name');
-            expect(user).toHaveProperty('password');
-            expect(user).toHaveProperty('email');
             expect(user).toHaveProperty('avatar_img_url');
             expect(user).toHaveProperty('education_id');
             expect(user).toHaveProperty('settings');

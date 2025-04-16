@@ -42,8 +42,6 @@ const seed = ({games, education_level, users}) => {
         return db.query(`CREATE TABLE users (
             username VARCHAR(50) PRIMARY KEY,
             name VARCHAR(300),
-            password bigint,
-            email VARCHAR(300),
             avatar_img_url VARCHAR(1000),
             education_id VARCHAR(50) REFERENCES education_level(education_id),
             settings JSON,
@@ -104,8 +102,8 @@ const seed = ({games, education_level, users}) => {
             subject_id BIGINT,
             score JSON
             );`)                  
-    }) 
-    .then(()=>{
+    })   
+      .then(()=>{
         const formattedInsertValues = games.map((game)=>{
           return [game.game_name];
         });
@@ -136,18 +134,21 @@ const seed = ({games, education_level, users}) => {
       })
       .then(()=>{
         const formattedInsertValues = users.map((user)=>{
-          return [user.username,user.name,user.password,user.email, user.avatar_img_url,user.education_id,user.settings, user.calendar ];
+          return [user.username,user.name, user.avatar_img_url,user.education_id ];
+          //,user.settings, user.calendar
+          //,settings, calendar
         });
     
         //make a call to format with vlues in users
         const insertQuery = format(`INSERT INTO users
-                          (username,name,password,email, avatar_img_url,education_id,settings, calendar )
+                          (username,name,avatar_img_url,education_id )
                           VALUES
                           %L
                           RETURNING *;`,
                         formattedInsertValues )
                         
         return db.query(insertQuery);
+
       })
 
  
