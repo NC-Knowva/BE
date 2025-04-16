@@ -15,6 +15,7 @@ module.exports = [
     topic_id: 6,
     avatar_img_url:
       "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
+    created_at: "2023-10-04T00:00:00.000Z",
   },
   {
     study_group: "Bird",
@@ -33,6 +34,7 @@ module.exports = [
     topic_id: 4,
     avatar_img_url:
       "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
+    created_at: "2023-11-04T00:00:00.000Z",
   },
   {
     study_group: "Peregrine falcon",
@@ -40,6 +42,7 @@ module.exports = [
     users: ["egirardini5", "ktrevaskiss6"],
     topic_id: 15,
     avatar_img_url: "https://robohash.org/etautmagnam.png?size=50x50&set=set1",
+    created_at: "2023-12-04T00:00:00.000Z",
   },
   {
     study_group: "Capybara",
@@ -48,6 +51,7 @@ module.exports = [
     topic_id: 5,
     avatar_img_url:
       "https://robohash.org/dolorvoluptateaspernatur.png?size=50x50&set=set1",
+    created_at: "2023-01-04T00:00:00.000Z",
   },
   {
     study_group: "Ringtail cat",
@@ -62,5 +66,6 @@ module.exports = [
     topic_id: 15,
     avatar_img_url:
       "https://robohash.org/teneturundeet.png?size=50x50&set=set1",
+    created_at: "2023-02-04T00:00:00.000Z",
   },
 ];

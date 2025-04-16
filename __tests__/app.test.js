@@ -10,10 +10,10 @@ afterAll(() => db.end());
 describe("ALL /notAPath", () => {
   test("404: Responds with 'Invalid URL' when attempting to access a non-existent endpoint", () => {
     return request(app).get("/notAPath")
-    .expect(404)
-    .then(({ body }) => {
-      expect(body.msg).toBe('Invalid URL');
-    });
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe('Invalid URL');
+      });
   });
 });
 
@@ -30,13 +30,13 @@ describe("GET /api/users", () => {
     }
 
     return request(app)
-    .get("/api/users")
-    .expect(200)
-    .then(({ body: { users } }) => {
-      expect(users.length).toBe(10);
-      users.forEach(user => {
-        expect(user).toMatchObject(expectedUser);
+      .get("/api/users")
+      .expect(200)
+      .then(({ body: { users } }) => {
+        expect(users.length).toBe(10);
+        users.forEach(user => {
+          expect(user).toMatchObject(expectedUser);
+        })
       })
-    })
   });
 });

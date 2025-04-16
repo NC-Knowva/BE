@@ -1,2 +1,3 @@
 node_*
 .env.*
+.DS_Store
