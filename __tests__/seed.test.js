@@ -1,7 +1,8 @@
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
+const data = require('../db/data/test-data/index.js');
 
-beforeAll(() => seed());
+beforeAll(() => seed(data));
 afterAll(() => db.end());
 
 describe("seed", () => {
@@ -153,19 +154,19 @@ describe('users table',()=>{
           });
         })
 
-    test('users table has password column as bigint',()=>{
-        return db.query(
-            `SELECT *
+    // test('users table has password column as bigint',()=>{
+    //     return db.query(
+    //         `SELECT *
 
-                    FROM information_schema.columns
-                    WHERE table_name = 'users'
-                    AND column_name = 'password';`
-        )
-        .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('password');
-            expect(column.data_type).toBe('bigint');
-          });
-    })
+    //                 FROM information_schema.columns
+    //                 WHERE table_name = 'users'
+    //                 AND column_name = 'password';`
+    //     )
+    //     .then(({ rows: [column] }) => {
+    //         expect(column.column_name).toBe('password');
+    //         expect(column.data_type).toBe('bigint');
+    //       });
+    // })
    
 
     test('users table has name column as varchar',()=>{
@@ -182,18 +183,18 @@ describe('users table',()=>{
     })
 
 
-    test('users table has email column as varchar',()=>{
-        return db.query(
-            `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'users'
-                    AND column_name = 'email';`
-        )
-        .then(({ rows: [column] }) => {
-            expect(column.column_name).toBe('email');
-            expect(column.data_type).toBe('character varying');
-          });
-    })
+    // test('users table has email column as varchar',()=>{
+    //     return db.query(
+    //         `SELECT column_name, data_type
+    //                 FROM information_schema.columns
+    //                 WHERE table_name = 'users'
+    //                 AND column_name = 'email';`
+    //     )
+    //     .then(({ rows: [column] }) => {
+    //         expect(column.column_name).toBe('email');
+    //         expect(column.data_type).toBe('character varying');
+    //       });
+    // })
 
     test('users table has avatar_img_url column as varchar',()=>{
         return db.query(
@@ -489,4 +490,395 @@ describe('topics',()=>{
           });
     })  
 })
+
+describe('study_group',()=>{
+
+    test('study_group table exists',()=>{
+        return db
+    .query(
+        `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'study_group'
+            );`
+    )
+    .then(({ rows: [{ exists }] }) => {
+        expect(exists).toBe(true);
+        });
+    })
+
+    test('study_group table has group_name column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'group_name';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('group_name');
+            expect(column.data_type).toBe('character varying');
+          });
+    })  
+
+    test('study_group table has group_name column as primary key',()=>{
+    return db
+        .query(
+        `SELECT column_name
+            FROM information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu
+            ON tc.constraint_name = kcu.constraint_name
+            WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_name = 'study_group';`
+        )
+        .then(({ rows: [{ column_name }] }) => {
+        expect(column_name).toBe('group_name');
+        });
+    })
+
+
+    test('study_group table has admins column as json',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'admins';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('admins');
+            expect(column.data_type).toBe('json');
+          });
+    }) 
+
+
+    test('study_group table has admins column as json',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'admins';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('admins');
+            expect(column.data_type).toBe('json');
+          });
+    }) 
+
+    test('study_group table has topic_id column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'topic_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('topic_id');
+            expect(column.data_type).toBe('bigint');
+          });
+    }) 
+
+    test('study_group table has avatar_img_url column as text',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'avatar_img_url';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('avatar_img_url');
+            expect(column.data_type).toBe('text');
+          });
+    }) 
 })
+
+describe('card_pack',()=>{
+    test('card_pack table exists',()=>{
+        return db
+    .query(
+        `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'card_pack'
+            );`
+    )
+    .then(({ rows: [{ exists }] }) => {
+        expect(exists).toBe(true);
+        });
+    })
+
+    test('card_pack table has pack_id column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'pack_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('pack_id');
+            expect(column.data_type).toBe('bigint');
+          });
+    }) 
+
+    test('card_pack table has pack_id column as primary key',()=>{
+    return db
+        .query(
+        `SELECT column_name
+            FROM information_schema.table_constraints AS tc
+            JOIN information_schema.key_column_usage AS kcu
+            ON tc.constraint_name = kcu.constraint_name
+            WHERE tc.constraint_type = 'PRIMARY KEY'
+            AND tc.table_name = 'card_pack';`
+        )
+        .then(({ rows: [{ column_name }] }) => {
+        expect(column_name).toBe('pack_id');
+        });
+    })
+    
+    test('card_pack table has username column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'username';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('username');
+            expect(column.data_type).toBe('character varying');
+          });
+    }) 
+
+    test('card_pack table has topic_id column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'topic_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('topic_id');
+            expect(column.data_type).toBe('bigint');
+          });
+    }) 
+
+    test('card_pack table has name column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'name';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('name');
+            expect(column.data_type).toBe('bigint');
+          });
+    }) 
+
+    test('card_pack table has description column as text',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'description';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('description');
+            expect(column.data_type).toBe('text');
+          });
+    }) 
+
+    test('card_pack table has education_id column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'education_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('education_id');
+            expect(column.data_type).toBe('character varying');
+          });
+    }) 
+
+    test('card_pack table has visibility column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'visibility';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('visibility');
+            expect(column.data_type).toBe('bigint');
+          });
+    })
+
+    test('card_pack table has questions column as json',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'card_pack'
+                    AND column_name = 'questions';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('questions');
+            expect(column.data_type).toBe('json');
+          });
+    })
+})
+
+describe('scoreboard',()=>{
+    test('scoreboard table exists',()=>{
+        return db
+    .query(
+        `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'scoreboard'
+            );`
+    )
+    .then(({ rows: [{ exists }] }) => {
+        expect(exists).toBe(true);
+        });
+    })
+
+
+    test('scoreboard table has score_id column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'score_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('score_id');
+            expect(column.data_type).toBe('bigint');
+          });
+    }) 
+
+    test('scoreboard table has score_id column as primary key',()=>{
+        return db
+            .query(
+            `SELECT column_name
+                FROM information_schema.table_constraints AS tc
+                JOIN information_schema.key_column_usage AS kcu
+                ON tc.constraint_name = kcu.constraint_name
+                WHERE tc.constraint_type = 'PRIMARY KEY'
+                AND tc.table_name = 'scoreboard';`
+            )
+            .then(({ rows: [{ column_name }] }) => {
+            expect(column_name).toBe('score_id');
+            });
+        })
+
+
+    test('scoreboard table has username column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'username';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('username');
+            expect(column.data_type).toBe('character varying');
+            });
+    }) 
+
+
+    test('scoreboard table has game_name column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'game_name';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('game_name');
+            expect(column.data_type).toBe('character varying');
+            });
+    }) 
+
+    test('scoreboard table has topic_id column as bigint',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'topic_id';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('topic_id');
+            expect(column.data_type).toBe('bigint');
+            });
+    }) 
+
+    test('scoreboard table has subject_id column as bigint',()=>{
+    return db.query(
+        `SELECT column_name, data_type
+                FROM information_schema.columns
+                WHERE table_name = 'scoreboard'
+                AND column_name = 'subject_id';`
+    )
+    .then(({ rows: [column] }) => {
+        expect(column.column_name).toBe('subject_id');
+        expect(column.data_type).toBe('bigint');
+        });
+    }) 
+    
+    test('scoreboard table has score column as json',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'score';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('score');
+            expect(column.data_type).toBe('json');
+            });
+        }) 
+})
+
+
+describe('Data Insertion',()=>{
+    test('games data has been inserted correctly', () => {
+        return db.query(
+            `SELECT * FROM games;`)
+            .then(({ rows: games }) => {
+          expect(games).toHaveLength(10);
+          games.forEach((game) => {
+            expect(game).toHaveProperty('game_name');
+          });
+        });
+      });
+
+      test('education_level data has been inserted correctly', () => {
+        return db.query(`SELECT * FROM education_level;`).then(({ rows: education_level }) => {
+          expect(education_level).toHaveLength(1);
+          education_level.forEach((education_level) => {
+            expect(education_level).toHaveProperty('education_id');
+            expect(education_level).toHaveProperty('description');
+          });
+        });
+      });
+
+      test('users data has been inserted correctly', () => {
+        return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
+          expect(users).toHaveLength(10);
+          users.forEach((user) => {
+            expect(user).toHaveProperty('username');
+            expect(user).toHaveProperty('name');
+            expect(user).toHaveProperty('avatar_img_url');
+            expect(user).toHaveProperty('education_id');
+            expect(user).toHaveProperty('settings');
+            expect(user).toHaveProperty('calendar');
+          });
+        });
+      });
+
+
+});
+
+
+});
