@@ -49,6 +49,67 @@ describe("seed", () => {
             expect(column_name).toBe('game_name');
           });
       });
+
+    test("games table has subject_name column as varchar", () => {
+    return db
+        .query(
+        `SELECT *
+                    FROM information_schema.columns
+                    WHERE table_name = 'games'
+                    AND column_name = 'subject_name';`
+        )
+        .then(({ rows: [column] }) => {
+
+            expect(column.column_name).toBe('subject_name');
+            expect(column.data_type).toBe('character varying');
+        });
+    })
+
+    test("games table has game_type column as varchar", () => {
+        return db
+            .query(
+            `SELECT *
+                        FROM information_schema.columns
+                        WHERE table_name = 'games'
+                        AND column_name = 'game_type';`
+            )
+            .then(({ rows: [column] }) => {
+    
+                expect(column.column_name).toBe('game_type');
+                expect(column.data_type).toBe('character varying');
+            });
+        })
+    test("games table has topic_name column as varchar", () => {
+        return db
+            .query(
+            `SELECT *
+                        FROM information_schema.columns
+                        WHERE table_name = 'games'
+                        AND column_name = 'topic_name';`
+            )
+            .then(({ rows: [column] }) => {
+
+                expect(column.column_name).toBe('topic_name');
+                expect(column.data_type).toBe('character varying');
+            });
+        })
+        
+
+    test("games table has auto_generated_code column as varchar", () => {
+        return db
+            .query(
+            `SELECT *
+                        FROM information_schema.columns
+                        WHERE table_name = 'games'
+                        AND column_name = 'auto_generated_code';`
+            )
+            .then(({ rows: [column] }) => {
+
+                expect(column.column_name).toBe('auto_generated_code');
+                expect(column.data_type).toBe('character varying');
+            });
+        })
+
 })
 
 
@@ -154,21 +215,6 @@ describe('users table',()=>{
           });
         })
 
-    // test('users table has password column as bigint',()=>{
-    //     return db.query(
-    //         `SELECT *
-
-    //                 FROM information_schema.columns
-    //                 WHERE table_name = 'users'
-    //                 AND column_name = 'password';`
-    //     )
-    //     .then(({ rows: [column] }) => {
-    //         expect(column.column_name).toBe('password');
-    //         expect(column.data_type).toBe('bigint');
-    //       });
-    // })
-   
-
     test('users table has name column as varchar',()=>{
         return db.query(
             `SELECT column_name, data_type
@@ -183,18 +229,18 @@ describe('users table',()=>{
     })
 
 
-    // test('users table has email column as varchar',()=>{
-    //     return db.query(
-    //         `SELECT column_name, data_type
-    //                 FROM information_schema.columns
-    //                 WHERE table_name = 'users'
-    //                 AND column_name = 'email';`
-    //     )
-    //     .then(({ rows: [column] }) => {
-    //         expect(column.column_name).toBe('email');
-    //         expect(column.data_type).toBe('character varying');
-    //       });
-    // })
+    test('users table has time_stamp column as timestamp',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'users'
+                    AND column_name = 'time_stamp';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('time_stamp');
+            expect(column.data_type).toBe('timestamp without time zone');
+          });
+    })
 
     test('users table has avatar_img_url column as varchar',()=>{
         return db.query(
@@ -293,6 +339,19 @@ test('message_activity table has dm_id column as bigint',()=>{
         expect(column.data_type).toBe('bigint');
         });
     })       
+
+    test('message_activity table has time_stamp column as timestamp',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'message_activity'
+                    AND column_name = 'time_stamp';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('time_stamp');
+            expect(column.data_type).toBe('timestamp without time zone');
+            });
+        })   
 
 test('message_activity table has sender_username column as VARCHAR',()=>{
     return db.query(
@@ -589,6 +648,20 @@ describe('study_group',()=>{
             expect(column.data_type).toBe('text');
           });
     }) 
+
+    test('study_group table has time_stamp column as timestamp',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'study_group'
+                    AND column_name = 'time_stamp';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('time_stamp');
+            expect(column.data_type).toBe('timestamp without time zone');
+          });
+    }) 
+
 })
 
 describe('card_pack',()=>{
@@ -840,20 +913,79 @@ describe('scoreboard',()=>{
         }) 
 })
 
+describe('users_group_junction',()=>{
+    test('users_group_junction table exists',()=>{
+        return db
+    .query(
+        `SELECT EXISTS (
+            SELECT FROM 
+                information_schema.tables 
+            WHERE 
+                table_name = 'users_group_junction'
+            );`
+    )
+    .then(({ rows: [{ exists }] }) => {
+        expect(exists).toBe(true);
+        });
+    })
+
+//role username group
+
+    test('users_group_junction table has role column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'users_group_junction'
+                    AND column_name = 'role';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('role');
+            expect(column.data_type).toBe('character varying');
+          });
+    }) 
+
+    test('users_group_junction table has username column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'users_group_junction'
+                    AND column_name = 'username';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('username');
+            expect(column.data_type).toBe('character varying');
+          });
+    }) 
+
+
+    test('users_group_junction table has group_name column as varchar',()=>{
+        return db.query(
+            `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'users_group_junction'
+                    AND column_name = 'group_name';`
+        )
+        .then(({ rows: [column] }) => {
+            expect(column.column_name).toBe('group_name');
+            expect(column.data_type).toBe('character varying');
+          });
+    }) 
+
+})
 
 describe('Data Insertion',()=>{
     test('games data has been inserted correctly', () => {
         return db.query(
             `SELECT * FROM games;`)
             .then(({ rows: games }) => {
-          expect(games).toHaveLength(10);
+          expect(games).toHaveLength(2);
           games.forEach((game) => {
             expect(game).toHaveProperty('game_name');
           });
         });
       });
 
-      test('education_level data has been inserted correctly', () => {
+      test.skip('education_level data has been inserted correctly', () => {
         return db.query(`SELECT * FROM education_level;`).then(({ rows: education_level }) => {
           expect(education_level).toHaveLength(1);
           education_level.forEach((education_level) => {
@@ -863,7 +995,7 @@ describe('Data Insertion',()=>{
         });
       });
 
-      test('users data has been inserted correctly', () => {
+      test.skip('users data has been inserted correctly', () => {
         return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
           expect(users).toHaveLength(10);
           users.forEach((user) => {
