@@ -1,5 +1,43 @@
 module.exports=[
     {
-        username:""
+        username:"kathy2008",
+        friend:"boss_bernard",
+        created_at:"2023-10-04T00:00:00.000Z"
+    },
+    {
+        username:"kathy2008",
+        friend:"studywithEM",
+        created_at:"2023-10-05T00:00:00.000Z"
+    },
+    {
+        username:"kathy2008",
+        friend:"studywithEM",
+        created_at:"2023-10-06T00:00:00.000Z"
+    },
+    {
+        username:"grades-smasher",
+        friend:"study_basher",
+        created_at:"2023-10-06T00:00:00.000Z"
+    },
+    {
+        username:"study_basher",
+        friend:"jodie_H",
+        created_at:"2023-11-06T00:00:00.000Z"
+    },
+    {
+        username:"jodie_H",
+        friend:"your_fav_ai",
+        created_at:"2023-10-10T00:00:00.000Z"
+    },
+    {
+        username:"jodie_H",
+        friend:"iheartsocio",
+        created_at:"2023-12-01T00:00:00.000Z"
+    },
+    {
+        username:"boss_bernard",
+        friend:"iheartsocio",
+        created_at:"2023-05-01T00:00:00.000Z"
     }
+
 ]
