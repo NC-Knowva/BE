@@ -1,8 +1,8 @@
 module.exports=[
     {//h
-        education_:"A-level"
+        education:"A-level"
     },
     {
-        education_:"GCSE",
+        education:"GCSE",
     }
 ]
