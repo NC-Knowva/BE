@@ -2,7 +2,8 @@ const db = require("../connection")
 const format = require('pg-format');
 
 
-const seed = () => {
+const seed = ({games, education_level, users}) => {
+    
     return db.query("DROP TABLE IF EXISTS scoreboard") //<< dropping users table
     .then(()=>{
     return db.query("DROP TABLE IF EXISTS card_pack")
@@ -104,6 +105,54 @@ const seed = () => {
             score JSON
             );`)                  
     }) 
+    .then(()=>{
+        const formattedInsertValues = games.map((game)=>{
+          return [game.game_name];
+        });
+    
+        //make a call to format with vlues in games
+        const insertQuery = format(`INSERT INTO games
+                          (game_name)
+                          VALUES
+                          %L
+                          RETURNING *;`,
+                        formattedInsertValues )
+        return db.query(insertQuery);
+      })
+      .then(()=>{
+        const formattedInsertValues = education_level.map((education_level)=>{
+          return [education_level.education_id,education_level.description ];
+        });
+    
+        //make a call to format with vlues in education_level
+        const insertQuery = format(`INSERT INTO education_level
+                          (education_id, description)
+                          VALUES
+                          %L
+                          RETURNING *;`,
+                        formattedInsertValues )
+                        
+        return db.query(insertQuery);
+      })
+      .then(()=>{
+        const formattedInsertValues = users.map((user)=>{
+          return [user.username,user.name,user.password,user.email, user.avatar_img_url,user.education_id,user.settings, user.calendar ];
+        });
+    
+        //make a call to format with vlues in users
+        const insertQuery = format(`INSERT INTO users
+                          (username,name,password,email, avatar_img_url,education_id,settings, calendar )
+                          VALUES
+                          %L
+                          RETURNING *;`,
+                        formattedInsertValues )
+                        
+        return db.query(insertQuery);
+      })
+
+ 
+      
+
 
 
 }
