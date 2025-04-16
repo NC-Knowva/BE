@@ -7,6 +7,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-01T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "ogladyer1",
@@ -16,6 +18,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-02T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "ggrishinov2",
@@ -25,6 +29,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-03T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "tfolbigg3",
@@ -34,6 +40,8 @@ module.exports = [
     education: "2",
     settings: {},
     calendar: {},
+    created_at: "2023-05-04T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "lgurrado4",
@@ -43,6 +51,8 @@ module.exports = [
     education: "2",
     settings: {},
     calendar: {},
+    created_at: "2023-05-05T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "egirardini5",
@@ -52,6 +62,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-01T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "ktrevaskiss6",
@@ -61,6 +73,8 @@ module.exports = [
     education: "2",
     settings: {},
     calendar: {},
+    created_at: "2023-05-07T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "acranham7",
@@ -70,6 +84,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-08T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "klease8",
@@ -79,6 +95,8 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-09T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
   {
     username: "eforgan9",
@@ -88,5 +106,7 @@ module.exports = [
     education: "1",
     settings: {},
     calendar: {},
+    created_at: "2023-05-10T00:00:00.000Z",
+    last_logged_in: "2024-05-01T00:00:00.000Z",
   },
 ];
