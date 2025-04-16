@@ -132,24 +132,24 @@ const seed = ({games, education_level, users}) => {
                         
         return db.query(insertQuery);
       })
-      .then(()=>{
-        const formattedInsertValues = users.map((user)=>{
-          return [user.username,user.name, user.avatar_img_url,user.education_id ];
-          //,user.settings, user.calendar
-          //,settings, calendar
-        });
+    //   .then(()=>{
+    //     const formattedInsertValues = users.map((user)=>{
+    //       return [user.username,user.name, user.avatar_img_url,user.education_id ];
+    //       //,user.settings, user.calendar
+    //       //,settings, calendar
+    //     });
     
-        //make a call to format with vlues in users
-        const insertQuery = format(`INSERT INTO users
-                          (username,name,avatar_img_url,education_id )
-                          VALUES
-                          %L
-                          RETURNING *;`,
-                        formattedInsertValues )
+    //     //make a call to format with vlues in users
+    //     const insertQuery = format(`INSERT INTO users
+    //                       (username,name,avatar_img_url,education_id )
+    //                       VALUES
+    //                       %L
+    //                       RETURNING *;`,
+    //                     formattedInsertValues )
                         
-        return db.query(insertQuery);
+    //     return db.query(insertQuery);
 
-      })
+    //   })
 
  
       
