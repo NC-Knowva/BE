@@ -5,11 +5,11 @@ exports.selectUsers = () => {
         SELECT 
         username, 
         name, 
-        email, 
         avatar_img_url,
         education_id,
         settings,
-        calendar 
+        calendar,
+        time_stamp 
         FROM users;
     `;
 
