@@ -2,9 +2,9 @@ const db = require("../connection")
 const format = require('pg-format');
 
 
-const seed = ({ games, education_level, users }) => {
+const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
 
-    return db.query("DROP TABLE IF EXISTS scoreboard") //<< dropping users table
+    return db.query("DROP TABLE IF EXISTS scoreboard")
         .then(() => {
             return db.query("DROP TABLE IF EXISTS card_pack")
         })
@@ -141,7 +141,6 @@ const seed = ({ games, education_level, users }) => {
             const formattedInsertValues = education_level.map((educations) => {
                 return [educations.education];
             });
-            console.log(formattedInsertValues)
             //make a call to format with vlues in education_level
             const insertQuery = format(`INSERT INTO education_level
                           (education)
@@ -151,30 +150,111 @@ const seed = ({ games, education_level, users }) => {
                 formattedInsertValues)
             return db.query(insertQuery);
         })
-    .then(()=>{
-      const formattedInsertValues = users.map((user)=>{
-        return [user.username,user.name, user.avatar_img_url,user.education_id ];
-        //,user.settings, user.calendar
-        //,settings, calendar
-      });
+        .then(() => {
+            const formattedInsertValues = users.map((user) => {
+                return [user.username, user.name, user.avatar_img_url, user.education_id];
+                //,user.settings, user.calendar
+                //,settings, calendar
+            });
 
-      //make a call to format with vlues in users
-      const insertQuery = format(`INSERT INTO users
+            //make a call to format with vlues in users
+            const insertQuery = format(`INSERT INTO users
                         (username,name,avatar_img_url,education_id )
                         VALUES
                         %L
                         RETURNING *;`,
-                      formattedInsertValues )
+                formattedInsertValues)
 
-      return db.query(insertQuery);
+            return db.query(insertQuery);
+        })
+        // .then(() => {
+        //     const formattedInsertValues = message_activity.map((message) => {
+        //         return [message.sender_username, message.receiver_username, message.body, message.created_at]
+        //     })
+        //     const insertQuery = format(`insert into message_activity 
+        //     (sender_username,receiver_username,body,created_at)
+        //     values
+        //     %L
+        //     returning *`, formattedInsertValues)
 
-    })
-
-
-
-
-
-
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = scoreboard.map((scoreb) => {
+        //         return [scoreb.username, scoreb.game_name, scoreb.game_type, scoreb.topic, scoreb.subject, scoreb.score]
+        //     })
+        //     const insertQuery = format(`insert into scoreboard 
+        //         (username,game_name,game_type,topic,subject,score)
+        //         values
+        //         %L
+        //         returning *;`,formattedInsertValues)
+        //         return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = study_group.map((study) => {
+        //         return [study.study_group, study.admins, study.users, study.topic_id, study.avatar_img_url, study.created_at]
+        //     })
+        //     const insertQuery = format(`insert into study_group
+        //         (study_group,admins,users,topic_id,avatar_img_url,created_at)
+        //         values
+        //         %L
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = topics.map((topic) => {
+        //         return [topic.topic_name, topic.education, topic.subject]
+        //     })
+        //     const insertQuery = format(`insert into topics
+        //         (topic_name, education, subject)
+        //         values 
+        //         %L
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = user_group_junction.map((users) => {
+        //         return [users.username, users.group, users.role]
+        //     })
+        //     const insertQuery = format(`insert into users_group_junction
+        //         (username, group_name, role)
+        //         values
+        //         %L
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = subjects.map((sub) => {
+        //         return [sub.subject_name, sub.education]
+        //     })
+        //     const insertQuery = format(`insert into subjects
+        //         (subject_name, education_id)
+        //         values
+        //         %L
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = card_pack.map((card) => {
+        //         return [card.username, card.topic, card.name, card.description, card.education, card.visibility, card.questions]
+        //     })
+        //     const insertQuery = format(`insert into card_pack
+        //         (username,topic,name,description,education,visibility,questions)
+        //         values
+        //         %L
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
+        // .then(() => {
+        //     const formattedInsertValues = friends.map((friendd) => {
+        //         return [friendd.username, friendd.friend, friendd.created_at]
+        //     })
+        //     const insertQuery = format(`insert into friends
+        //         (username, friend, created_at)
+        //         values
+        //         returning *`, formattedInsertValues)
+        //     return db.query(insertQuery)
+        // })
 }
 
 module.exports = seed;
