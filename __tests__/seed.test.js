@@ -984,20 +984,74 @@ describe("seed", () => {
 
         test('users data has been inserted correctly', () => {
             return db.query(`SELECT * FROM users;`).then(({ rows: users }) => {
-                expect(users).toHaveLength(10);
-                users.forEach((user) => {
-                    expect(user).toHaveProperty('username');
-                    expect(user).toHaveProperty('name');
-                    expect(user).toHaveProperty('avatar_img_url');
-                    expect(user).toHaveProperty('education_id');
-                    expect(user).toHaveProperty('settings');
-                    expect(user).toHaveProperty('calendar');
+              expect(users).toHaveLength(10);
+              users.forEach((user) => {
+                expect(user).toHaveProperty('username');
+                expect(user).toHaveProperty('name');
+                expect(user).toHaveProperty('avatar_img_url');
+                expect(user).toHaveProperty('education_id');
+                expect(user).toHaveProperty('settings');
+                expect(user).toHaveProperty('calendar');
+                expect(user).toHaveProperty('time_stamp');
+              });
+            });
+          });
+    
+        test('message_activity data has been inserted correctly', () => {
+        return db.query(`SELECT * FROM message_activity;`)
+        .then(({ rows: message_activity }) => {
+            expect(message_activity).toHaveLength(10);
+            message_activity.forEach((message) => {
+            expect(message).toHaveProperty('dm_id');
+            expect(message).toHaveProperty('sender_username');
+            expect(message).toHaveProperty('receiver_username');
+            expect(message).toHaveProperty('body');
+            expect(message).toHaveProperty('time_stamp');
+            });
+        });
+        });
+    
+        test('subjects data has been inserted correctly', () => {
+            return db.query(`SELECT * FROM subjects;`)
+            .then(({ rows: subjects }) => {
+                expect(subjects).toHaveLength(5);
+                subjects.forEach((subject) => {
+                expect(subject).toHaveProperty('subject_id');
+                expect(subject).toHaveProperty('subject_name');
+                expect(subject).toHaveProperty('education_id');
+                });
+            });
+            });
+    
+        test('subjects data has been inserted correctly', () => {
+            return db.query(`SELECT * FROM subjects;`)
+            .then(({ rows: subjects }) => {
+                expect(subjects).toHaveLength(5);
+                subjects.forEach((subject) => {
+                expect(subject).toHaveProperty('subject_id');
+                expect(subject).toHaveProperty('subject_name');
+                expect(subject).toHaveProperty('education_id');
                 });
             });
         });
+    
 
-
+    test('topics data has been inserted correctly', () => {
+        return db.query(`SELECT * FROM topics;`)
+        .then(({ rows: topics }) => {
+            expect(topics).toHaveLength(6);
+            topics.forEach((topic) => {
+            expect(topic).toHaveProperty('topic_id');
+            expect(topic).toHaveProperty('topic_name');
+            expect(topic).toHaveProperty('education_id');
+            expect(topic).toHaveProperty('subject_id');
+            });
+        });
     });
+     
+
+
+});
 
 
 });
