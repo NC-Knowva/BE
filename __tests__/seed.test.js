@@ -35,7 +35,7 @@ describe("seed", () => {
                     expect(column.data_type).toBe('character varying');
                 });
         })
-        test('games table has game_name column as the primary key', () => {
+        test('games table has game_id column as the primary key', () => {
             return db
                 .query(
                     `SELECT column_name
@@ -46,9 +46,23 @@ describe("seed", () => {
                       AND tc.table_name = 'games';`
                 )
                 .then(({ rows: [{ column_name }] }) => {
-                    expect(column_name).toBe('game_name');
+                    expect(column_name).toBe('game_id');
                 });
         });
+        test("games table has game_name column as varchar", () => {
+            return db
+                .query(
+                    `SELECT *
+                    FROM information_schema.columns
+                    WHERE table_name = 'games'
+                    AND column_name = 'game_name';`
+                )
+                .then(({ rows: [column] }) => {
+
+                    expect(column.column_name).toBe('game_name');
+                    expect(column.data_type).toBe('character varying');
+                });
+        })
 
         test("games table has subject_name column as varchar", () => {
             return db
@@ -109,6 +123,18 @@ describe("seed", () => {
                     expect(column.data_type).toBe('character varying');
                 });
         })
+        test('games table has created_at column as timestamp', () => {
+            return db.query(
+                `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'games'
+                    AND column_name = 'created_at';`
+            )
+                .then(({ rows: [column] }) => {
+                    expect(column.column_name).toBe('created_at');
+                    expect(column.data_type).toBe('timestamp without time zone');
+                });
+        })
 
     })
 
@@ -129,7 +155,7 @@ describe("seed", () => {
                     expect(exists).toBe(true);
                 });
         })
-        test('education_level table has education_id column as varchar', () => {
+        test('education_level table has education column as varchar', () => {
             return db.query(
                 `SELECT *
                     FROM information_schema.columns
@@ -141,7 +167,7 @@ describe("seed", () => {
                     expect(column.data_type).toBe('character varying');
                 });
         })
-        test('education_level table has education_id column as the primary key', () => {
+        test('education_level table has education column as the primary key', () => {
             return db
                 .query(
                     `SELECT column_name
@@ -216,15 +242,15 @@ describe("seed", () => {
         })
 
 
-        test('users table has time_stamp column as timestamp', () => {
+        test('users table has created_at column as timestamp', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'users'
-                    AND column_name = 'time_stamp';`
+                    AND column_name = 'created_at';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('time_stamp');
+                    expect(column.column_name).toBe('created_at');
                     expect(column.data_type).toBe('timestamp without time zone');
                 });
         })
@@ -314,7 +340,7 @@ describe("seed", () => {
                     expect(column_name).toBe('dm_id');
                 });
         });
-        test('message_activity table has dm_id column as bigint', () => {
+        test('message_activity table has dm_id column as integer', () => {
             return db.query(
                 `SELECT column_name, data_type
                 FROM information_schema.columns
@@ -323,22 +349,10 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('dm_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
-        test('message_activity table has time_stamp column as timestamp', () => {
-            return db.query(
-                `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'message_activity'
-                    AND column_name = 'time_stamp';`
-            )
-                .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('time_stamp');
-                    expect(column.data_type).toBe('timestamp without time zone');
-                });
-        })
 
         test('message_activity table has sender_username column as VARCHAR', () => {
             return db.query(
@@ -378,6 +392,19 @@ describe("seed", () => {
                 });
         })
 
+        test('message_activity table has created_at column as timestamp', () => {
+            return db.query(
+                `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'message_activity'
+                    AND column_name = 'created_at';`
+            )
+                .then(({ rows: [column] }) => {
+                    expect(column.column_name).toBe('created_at');
+                    expect(column.data_type).toBe('timestamp without time zone');
+                });
+        })
+
 
     })
 
@@ -412,7 +439,7 @@ describe("seed", () => {
                 });
         })
 
-        test('subjects table has subject_id column as bigint', () => {
+        test('subjects table has subject_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -421,7 +448,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('subject_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -469,7 +496,7 @@ describe("seed", () => {
                 });
         })
 
-        test('topics table has topic_id column as bigint', () => {
+        test('topics table has topic_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -478,7 +505,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('topic_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -523,7 +550,7 @@ describe("seed", () => {
                 });
         })
 
-        test('topics table has subject_id column as bigint', () => {
+        test('topics table has subject_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -532,7 +559,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('subject_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
     })
@@ -567,7 +594,7 @@ describe("seed", () => {
                 });
         })
 
-        test('study_group table has group_name column as primary key', () => {
+        test('study_group table has group_id column as primary key', () => {
             return db
                 .query(
                     `SELECT column_name
@@ -578,7 +605,7 @@ describe("seed", () => {
             AND tc.table_name = 'study_group';`
                 )
                 .then(({ rows: [{ column_name }] }) => {
-                    expect(column_name).toBe('group_name');
+                    expect(column_name).toBe('group_id');
                 });
         })
 
@@ -596,21 +623,7 @@ describe("seed", () => {
                 });
         })
 
-
-        test('study_group table has admins column as json', () => {
-            return db.query(
-                `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'study_group'
-                    AND column_name = 'admins';`
-            )
-                .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('admins');
-                    expect(column.data_type).toBe('json');
-                });
-        })
-
-        test('study_group table has topic_id column as bigint', () => {
+        test('study_group table has topic_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -619,7 +632,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('topic_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -636,15 +649,15 @@ describe("seed", () => {
                 });
         })
 
-        test('study_group table has time_stamp column as timestamp', () => {
+        test('study_group table has created_at column as timestamp', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'study_group'
-                    AND column_name = 'time_stamp';`
+                    AND column_name = 'created_at';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('time_stamp');
+                    expect(column.column_name).toBe('created_at');
                     expect(column.data_type).toBe('timestamp without time zone');
                 });
         })
@@ -667,7 +680,7 @@ describe("seed", () => {
                 });
         })
 
-        test('card_pack table has pack_id column as bigint', () => {
+        test('card_pack table has pack_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -676,7 +689,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('pack_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -708,7 +721,7 @@ describe("seed", () => {
                 });
         })
 
-        test('card_pack table has topic_id column as bigint', () => {
+        test('card_pack table has topic_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -717,11 +730,11 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('topic_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
-        test('card_pack table has name column as bigint', () => {
+        test('card_pack table has name column as varchar', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -730,7 +743,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('name');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('character varying');
                 });
         })
 
@@ -760,7 +773,7 @@ describe("seed", () => {
                 });
         })
 
-        test('card_pack table has visibility column as bigint', () => {
+        test('card_pack table has visibility column as boolean', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -769,7 +782,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('visibility');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('boolean');
                 });
         })
 
@@ -804,7 +817,7 @@ describe("seed", () => {
         })
 
 
-        test('scoreboard table has score_id column as bigint', () => {
+        test('scoreboard table has score_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -813,7 +826,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('score_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -847,20 +860,20 @@ describe("seed", () => {
         })
 
 
-        test('scoreboard table has game_name column as varchar', () => {
+        test('scoreboard table has game_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'scoreboard'
-                    AND column_name = 'game_name';`
+                    AND column_name = 'game_id';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('game_name');
-                    expect(column.data_type).toBe('character varying');
+                    expect(column.column_name).toBe('game_id');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
-        test('scoreboard table has topic_id column as bigint', () => {
+        test('scoreboard table has topic_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
@@ -869,11 +882,11 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('topic_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
-        test('scoreboard table has subject_id column as bigint', () => {
+        test('scoreboard table has subject_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                 FROM information_schema.columns
@@ -882,7 +895,7 @@ describe("seed", () => {
             )
                 .then(({ rows: [column] }) => {
                     expect(column.column_name).toBe('subject_id');
-                    expect(column.data_type).toBe('bigint');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -917,6 +930,20 @@ describe("seed", () => {
         })
 
         //role username group
+        test('users_group_junction table has users_group_id column as primary key', () => {
+            return db
+                .query(
+                    `SELECT column_name
+                FROM information_schema.table_constraints AS tc
+                JOIN information_schema.key_column_usage AS kcu
+                ON tc.constraint_name = kcu.constraint_name
+                WHERE tc.constraint_type = 'PRIMARY KEY'
+                AND tc.table_name = 'users_group_junction';`
+                )
+                .then(({ rows: [{ column_name }] }) => {
+                    expect(column_name).toBe('users_group_id');
+                });
+        })
 
         test('users_group_junction table has role column as varchar', () => {
             return db.query(
@@ -945,16 +972,16 @@ describe("seed", () => {
         })
 
 
-        test('users_group_junction table has group_name column as varchar', () => {
+        test('users_group_junction table has group_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'users_group_junction'
-                    AND column_name = 'group_name';`
+                    AND column_name = 'group_id';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('group_name');
-                    expect(column.data_type).toBe('character varying');
+                    expect(column.column_name).toBe('group_id');
+                    expect(column.data_type).toBe('integer');
                 });
         })
 
@@ -990,8 +1017,7 @@ describe("seed", () => {
                     expect(user).toHaveProperty('name');
                     expect(user).toHaveProperty('avatar_img_url');
                     expect(user).toHaveProperty('education_id');
-                    expect(user).toHaveProperty('settings');
-                    expect(user).toHaveProperty('calendar');
+                    expect(user).toHaveProperty('created_at');
                 });
             });
         });
