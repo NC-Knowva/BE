@@ -859,6 +859,18 @@ describe("seed", () => {
                 });
         })
 
+        test('scoreboard table has created_at column as timestamp', () => {
+            return db.query(
+                `SELECT column_name, data_type
+                    FROM information_schema.columns
+                    WHERE table_name = 'scoreboard'
+                    AND column_name = 'created_at';`
+            )
+                .then(({ rows: [column] }) => {
+                    expect(column.column_name).toBe('created_at');
+                    expect(column.data_type).toBe('timestamp without time zone');
+                });
+        })
 
         test('scoreboard table has game_id column as int', () => {
             return db.query(
