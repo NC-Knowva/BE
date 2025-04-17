@@ -92,7 +92,7 @@ exports.formatScoreboardSubjects=(scoreboard,subjects)=>{
 
     for (let i=0;i<scoreboardCopy.length;i++){
         const sc= scoreboardCopy[i]
-        sc.subject_id= lookupObj[sc.subject_name]
+        sc.subject_id= lookupObj[sc.subject]
         formattedData.push(sc)
     }
     return formattedData
@@ -109,7 +109,7 @@ exports.formatTopicsSubjects=(topics,subjects)=>{
 
     for (let i=0;i<topicsCopy.length;i++){
         const sc= topicsCopy[i]
-        sc.subject_id= lookupObj[sc.subject_name]
+        sc.subject_id= lookupObj[sc.subject]
         formattedData.push(sc)
     }
     return formattedData
@@ -123,16 +123,17 @@ exports.formatUsersGroup=(users,groups)=>{
     const groupsCopy=[...groups]
     const formattedData=[]
     const lookupObj= this.groupsLookup(groupsCopy)
+    console.log(lookupObj)
 
     for (let i=0;i<usersCopy.length;i++){
         const sc= usersCopy[i]
-        sc.group_id= lookupObj[sc.study_group]
+        sc.group_id= lookupObj[sc.group]
         formattedData.push(sc)
     }
     return formattedData
 }
 
-exports.formatSubjectTopics=(subjects,topics)=>{
+exports.formaCardPackTopics=(subjects,topics)=>{
     if(topics.length===0){
         return []
     }
@@ -143,7 +144,7 @@ exports.formatSubjectTopics=(subjects,topics)=>{
 
     for (let i=0;i<subjectsCopy.length;i++){
         const sc= subjectsCopy[i]
-        sc.topic_id= lookupObj[sc.topic_name]
+        sc.topic_id= lookupObj[sc.topic]
         formattedData.push(sc)
     }
     return formattedData

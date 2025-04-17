@@ -6,6 +6,7 @@ module.exports = [
     topic: "topic 1",
     subject: "one",
     score: { correct: 8, incorrect: 2, time: 125 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "aclaricoats0",
@@ -14,6 +15,7 @@ module.exports = [
     topic: "topic2",
     subject: "two",
     score: { correct: 7, incorrect: 3, time: 110 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "aclaricoats0",
@@ -22,6 +24,7 @@ module.exports = [
     topic: "topic 3",
     subject: "three",
     score: { correct: 9, incorrect: 1, time: 95 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "ogladyer1",
@@ -30,6 +33,7 @@ module.exports = [
     topic: "topic4",
     subject: "four",
     score: { correct: 6, incorrect: 4, time: 140 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "ogladyer1",
@@ -38,6 +42,7 @@ module.exports = [
     topic: "topic 5",
     subject: "five",
     score: { correct: 10, incorrect: 0, time: 85 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "ggrishinov2",
@@ -46,6 +51,7 @@ module.exports = [
     topic: "topic6",
     subject: "one",
     score: { correct: 5, incorrect: 5, time: 150 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "ggrishinov2",
@@ -54,6 +60,7 @@ module.exports = [
     topic: "topic 1",
     subject: "two",
     score: { correct: 8, incorrect: 2, time: 120 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "tfolbigg3",
@@ -62,6 +69,7 @@ module.exports = [
     topic: "topic2",
     subject: "three",
     score: { correct: 7, incorrect: 3, time: 115 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
   {
     username: "tfolbigg3",
@@ -70,5 +78,6 @@ module.exports = [
     topic: "topic 3",
     subject: "four",
     score: { correct: 9, incorrect: 1, time: 90 },
+    created_at: "2023-05-01T00:00:00.000Z",
   },
 ];
