@@ -22,11 +22,11 @@ describe("GET /api/users", () => {
     const expectedUser = {
       username: expect.any(String),
       name: expect.any(String),
-      email: expect.any(String),
       avatar_img_url: expect.any(String),
       education_id: expect.any(String),
       settings: expect.any(Object),
-      calendar: expect.any(Object)
+      calendar: expect.any(Object),
+      time_stamp: expect.any(String),
     }
 
     return request(app)
@@ -38,5 +38,35 @@ describe("GET /api/users", () => {
           expect(user).toMatchObject(expectedUser);
         })
       })
+  });
+});
+
+describe("GET /api/users/:username", () => {
+  test("200: Responds with a user with given username", () => {
+    const expectedUser = {
+      username: "aclaricoats0",
+      name: "Addia Claricoats",
+      avatar_img_url: "https://robohash.org/verodoloremfuga.png?size=50x50&set=set1",
+      education_id: "1",
+      settings: expect.any(Object),
+      calendar: expect.any(Object),
+      time_stamp: expect.any(String),
+    }
+
+    return request(app)
+      .get("/api/users/aclaricoats0")
+      .expect(200)
+      .then(({ body: { user } }) => {
+        expect(user).toMatchObject(expectedUser);
+      })
+  });
+
+  test("404: Responds with 'Resource Not Found' when given a valid username that is not in the database", () => {
+    return request(app)
+    .get("/api/users/aclaricoats")
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.msg).toBe("Resource Not Found");
+    });
   });
 });
