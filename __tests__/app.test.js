@@ -70,3 +70,36 @@ describe("GET /api/users/:username", () => {
     });
   });
 });
+
+describe("GET /api/users/:username/messages", () => {
+  test("200: Responds with an array of messages for the given username, sorted by most recent first", () => {
+
+    const expectedMessage = {
+      sender_username: expect.any(String),
+      receiver_username: expect.any(String),
+      body: expect.any(String),
+      created_at: expect.any(String),
+    }
+
+    return request(app)
+      .get("/api/users/eforgan9/messages")
+      .expect(200)
+      .then(({ body: { messages } }) => {
+        expect(messages.length).toBe(5);
+        expect(messages).toBeSortedBy('created_at', { descending: true });
+        messages.forEach(message => {
+          expect(message).toMatchObject(expectedMessage);
+        });
+      })
+  });
+
+  test("200: Responds with an empty array when a user has no messages", () => {
+    return request(app)
+    .get("/api/users/ktrevaskiss6/messages")
+    .expect(200)
+    .then(({ body: { messages }}) => {
+      expect(messages.length).toBe(0);
+      expect(messages).toEqual([]);
+    });
+  });
+});
