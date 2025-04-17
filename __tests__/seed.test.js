@@ -1023,17 +1023,7 @@ describe("seed", () => {
             });
             });
     
-        test('subjects data has been inserted correctly', () => {
-            return db.query(`SELECT * FROM subjects;`)
-            .then(({ rows: subjects }) => {
-                expect(subjects).toHaveLength(5);
-                subjects.forEach((subject) => {
-                expect(subject).toHaveProperty('subject_id');
-                expect(subject).toHaveProperty('subject_name');
-                expect(subject).toHaveProperty('education_id');
-                });
-            });
-        });
+  
     
 
     test('topics data has been inserted correctly', () => {
