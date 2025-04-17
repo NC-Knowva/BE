@@ -1,6 +1,6 @@
 const db = require("../connection")
 const format = require('pg-format');
-const { formatScoreboardSubjects, formatScoreboardTopics, formatTopicsSubjects } = require('./utils')
+const { formatScoreboardSubjects, formatScoreboardTopics, formatTopicsSubjects, formaCardPackTopics,formatScoreboardGames,formatUsersGroup,formaCardPackTopics } = require('./utils')
 
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
