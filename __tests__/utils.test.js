@@ -1,4 +1,4 @@
-const { topicsLookup, subjectsLookup, gamesLookup, formatScoreboardGames, formatScoreboardSubjects, formatScoreboardTopics, formaCardPackTopics, formatTopicsSubjects, formatUsersGroup, groupsLookup } = require('../db/seeds/utils')
+const { topicsLookup, subjectsLookup, gamesLookup, formatScoreboardGames, formatScoreboardSubjects, formatScoreboardTopics, formaCardPackTopics, formatTopicsSubjects, formatUsersGroup, groupsLookup, formatStudyGroupTopics, formatUsersGroupStudyGroups } = require('../db/seeds/utils')
 
 describe('topics lookup', () => {
     test('returns empty object if input array is empty', () => {
@@ -511,13 +511,13 @@ describe('format card pack topics!!', () => {
     test('returns correct added key in obj with the id for multiple obj elements', () => {
         const topics = [
             {
-                topic_id:1,
+                topic_id: 1,
                 topic_name: "topic 1",
                 education: "1",
                 subject: "one",
             },
             {
-                topic_id:2,
+                topic_id: 2,
                 topic_name: "topic 2",
                 education: "2",
                 subject: "two",
@@ -575,7 +575,7 @@ describe('format card pack topics!!', () => {
         expect(output).toEqual(
             [
                 {
-                    topic_id:1,
+                    topic_id: 1,
                     username: "aclaricoats0",
                     topic: 'topic 1',
                     name: "Topic 1 Card Pack",
@@ -599,7 +599,7 @@ describe('format card pack topics!!', () => {
                     ]
                 },
                 {
-                    topic_id:2,
+                    topic_id: 2,
                     username: "ogladyer1",
                     topic: "topic 2",
                     name: "Topic 2 Card Pack",
@@ -626,6 +626,167 @@ describe('format card pack topics!!', () => {
         )
     })
 })
+
+describe('format study group topics!!', () => {
+    test('returns correct added key in obj with the id for multiple obj elements', () => {
+        const sc = [{
+            study_group: "Colobus",
+            admins: ["eforgan9"],
+            users: [
+                "tfolbigg3",
+                "lgurrado4",
+                "acranham7",
+                "eforgan9",
+                "ktrevaskiss6",
+                "ogladyer1",
+                "egirardini5",
+                "ggrishinov2",
+            ],
+            topic: "topic 1",
+            avatar_img_url:
+                "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
+            created_at: "2023-10-04T00:00:00.000Z",
+        },
+        {
+            study_group: "Bird",
+            admins: ["eforgan9"],
+            users: [
+                "aclaricoats0",
+                "ogladyer1",
+                "klease8",
+                "ktrevaskiss6",
+                "eforgan9",
+                "lgurrado4",
+                "acranham7",
+                "ggrishinov2",
+                "egirardini5",
+            ],
+            topic: "topic 2",
+            avatar_img_url:
+                "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
+            created_at: "2023-11-04T00:00:00.000Z",
+        }]
+
+        const topics = [
+            {
+                topic_id: 1,
+                topic_name: "topic 1",
+                eductaion: "GCSE",
+                subject: "Maths"
+            },
+            {
+                topic_id: 2,
+                topic_name: "topic 2",
+                eductaion: "GCSE",
+                subject: "Science"
+            }
+        ]
+        const output = formatStudyGroupTopics(sc, topics)
+        expect(output).toEqual(
+            [{
+                topic_id: 1,
+                study_group: "Colobus",
+                admins: ["eforgan9"],
+                users: [
+                    "tfolbigg3",
+                    "lgurrado4",
+                    "acranham7",
+                    "eforgan9",
+                    "ktrevaskiss6",
+                    "ogladyer1",
+                    "egirardini5",
+                    "ggrishinov2",
+                ],
+                topic: "topic 1",
+                avatar_img_url:
+                    "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
+                created_at: "2023-10-04T00:00:00.000Z",
+            },
+            {
+                topic_id: 2,
+                study_group: "Bird",
+                admins: ["eforgan9"],
+                users: [
+                    "aclaricoats0",
+                    "ogladyer1",
+                    "klease8",
+                    "ktrevaskiss6",
+                    "eforgan9",
+                    "lgurrado4",
+                    "acranham7",
+                    "ggrishinov2",
+                    "egirardini5",
+                ],
+                topic: "topic 2",
+                avatar_img_url:
+                    "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
+                created_at: "2023-11-04T00:00:00.000Z",
+            }]
+        )
+    })
+})
+describe('format USER GROUPS FROM STUDY_GROUP!!', () => {
+    test('returns correct added key in obj with the id for multiple obj elements', () => {
+        const sc = [
+            {
+                username: "tfolbigg3",
+                group: "Colobus",
+                role: "member"
+            },
+            {
+                username: "lgurrado4",
+                group: "Bird",
+                role: "member"
+            },
+        ]
+
+        const group = [
+            {
+                group_id:1,
+                study_group: "Colobus", 
+                admins: "eforgan9",
+                topic: "topic 1",
+                avatar_img_url:
+                  "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
+                created_at: "2023-10-04T00:00:00.000Z",
+              },
+              {
+                group_id:2,
+                study_group: "Bird",
+                admins: "eforgan9",
+                topic: "topic 2",
+                avatar_img_url:
+                  "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
+                created_at: "2023-11-04T00:00:00.000Z",
+              }
+        ]
+        const output = formatUsersGroupStudyGroups(sc, group)
+        expect(output).toEqual(
+            [
+                {
+                    group_id:1,
+                    username: "tfolbigg3",
+                    group: "Colobus",
+                    role: "member"
+                },
+                {
+                    group_id:2,
+                    username: "lgurrado4",
+                    group: "Bird",
+                    role: "member"
+                },
+            ]
+        )
+    })
+})
+
+
+
+
+
+
+
+
 
 
 

@@ -33,6 +33,7 @@
     "jest-sorted": "^1.0.15",
     "pg": "^8.14.1",
     "pg-format": "^1.0.4",
+    "prettier": "^3.5.3",
     "supertest": "^7.1.0"
   }
 }

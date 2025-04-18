@@ -47,6 +47,22 @@ exports.groupsLookup = (groups) => {
     return res
 }
 
+exports.formatUsersGroupStudyGroups=(userGroup,studyGroup)=>{
+    if(studyGroup.length===0){
+        return []
+    }
+    const userGroupCopy=[...userGroup]
+    const studyGroupCopy=[...studyGroup]
+    const formattedData=[]
+    const lookupObj= this.groupsLookup(studyGroupCopy)
+
+    for (let i=0;i<userGroupCopy.length;i++){
+        const sc= userGroupCopy[i]
+        sc.group_id= lookupObj[sc.group]
+        formattedData.push(sc)
+    }
+    return formattedData
+}
 exports.formatScoreboardGames=(scoreboard,games)=>{
     if(games.length===0){
         return []
@@ -93,6 +109,22 @@ exports.formatScoreboardSubjects=(scoreboard,subjects)=>{
     for (let i=0;i<scoreboardCopy.length;i++){
         const sc= scoreboardCopy[i]
         sc.subject_id= lookupObj[sc.subject]
+        formattedData.push(sc)
+    }
+    return formattedData
+}
+exports.formatStudyGroupTopics=(studyGroup,topics)=>{
+    if(topics.length===0){
+        return []
+    }
+    const studyGroupCopy=[...studyGroup]
+    const topicsCopy=[...topics]
+    const formattedData=[]
+    const lookupObj= this.topicsLookup(topicsCopy)
+
+    for (let i=0;i<studyGroupCopy.length;i++){
+        const sc= studyGroupCopy[i]
+        sc.topic_id= lookupObj[sc.topic]
         formattedData.push(sc)
     }
     return formattedData

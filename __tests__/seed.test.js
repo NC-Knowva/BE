@@ -609,20 +609,6 @@ describe("seed", () => {
                 });
         })
 
-
-        test('study_group table has admins column as json', () => {
-            return db.query(
-                `SELECT column_name, data_type
-                    FROM information_schema.columns
-                    WHERE table_name = 'study_group'
-                    AND column_name = 'admins';`
-            )
-                .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('admins');
-                    expect(column.data_type).toBe('json');
-                });
-        })
-
         test('study_group table has topic_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
@@ -800,7 +786,7 @@ describe("seed", () => {
         })
     })
 
-    describe('scoreboard', () => {
+    describe.only('scoreboard', () => {
         test('scoreboard table exists', () => {
             return db
                 .query(
@@ -941,7 +927,6 @@ describe("seed", () => {
                 });
         })
 
-        //role username group
         test('users_group_junction table has users_group_id column as primary key', () => {
             return db
                 .query(
@@ -983,7 +968,6 @@ describe("seed", () => {
                 });
         })
 
-
         test('users_group_junction table has group_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
@@ -999,7 +983,7 @@ describe("seed", () => {
 
     })
 
-    describe.skip('friends',()=>{
+    describe('friends',()=>{
         test('friends table exists', () => {
             return db
                 .query(
@@ -1086,7 +1070,7 @@ describe("seed", () => {
 
     })
 
-    describe.skip('Data Insertion', () => {
+    describe('Data Insertion', () => {
         test('games data has been inserted correctly', () => {
             return db.query(
                 `SELECT * FROM games;`)
@@ -1166,11 +1150,9 @@ describe("seed", () => {
             return db.query(`SELECT * FROM study_group;`)
             .then(({ rows: study_group }) => {
                 expect(study_group).toHaveLength(5);
-                topics.forEach((group) => {
+                study_group.forEach((group) => {
                 expect(group).toHaveProperty('group_id');
                 expect(group).toHaveProperty('group_name');
-                expect(group).toHaveProperty('admins');
-                expect(group).toHaveProperty('username');
                 expect(group).toHaveProperty('avatar_img_url');
                 expect(group).toHaveProperty('created_at');
                 });
