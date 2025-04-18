@@ -47,136 +47,137 @@ exports.groupsLookup = (groups) => {
     return res
 }
 
-exports.formatUsersGroupStudyGroups=(userGroup,studyGroup)=>{
-    if(studyGroup.length===0){
+exports.formatUsersGroupStudyGroups = (userGroup, studyGroup) => {
+    if (studyGroup.length === 0) {
         return []
     }
-    const userGroupCopy=[...userGroup]
-    const studyGroupCopy=[...studyGroup]
-    const formattedData=[]
-    const lookupObj= this.groupsLookup(studyGroupCopy)
+    const userGroupCopy = [...userGroup]
+    const studyGroupCopy = [...studyGroup]
+    const formattedData = []
+    const lookupObj = this.groupsLookup(studyGroupCopy)
 
-    for (let i=0;i<userGroupCopy.length;i++){
-        const sc= userGroupCopy[i]
-        sc.group_id= lookupObj[sc.group]
+    for (let i = 0; i < userGroupCopy.length; i++) {
+        const sc = userGroupCopy[i]
+        sc.group_id = lookupObj[sc.group]
         formattedData.push(sc)
     }
     return formattedData
 }
-exports.formatScoreboardGames=(scoreboard,games)=>{
-    if(games.length===0){
+exports.formatScoreboardGames = (scoreboard, games) => {
+    if (games.length === 0) {
         return []
     }
-    const scoreboardCopy=[...scoreboard]
-    const gamesCopy=[...games]
-    const formattedData=[]
-    const lookupObj= this.gamesLookup(gamesCopy)
+    const scoreboardCopy = [...scoreboard]
+    const gamesCopy = [...games]
+    const formattedData = []
+    const lookupObj = this.gamesLookup(gamesCopy)
 
-    for (let i=0;i<scoreboardCopy.length;i++){
-        const sc= scoreboardCopy[i]
-        sc.game_id= lookupObj[sc.game_name]
-        formattedData.push(sc)
-    }
-    return formattedData
-}
-
-exports.formatScoreboardTopics=(scoreboard,topics)=>{
-    if(topics.length===0){
-        return []
-    }
-    const scoreboardCopy=[...scoreboard]
-    const topicsCopy=[...topics]
-    const formattedData=[]
-    const lookupObj= this.topicsLookup(topicsCopy)
-
-    for (let i=0;i<scoreboardCopy.length;i++){
-        const sc= scoreboardCopy[i]
-        sc.topic_id= lookupObj[sc.topic]
+    for (let i = 0; i < scoreboardCopy.length; i++) {
+        const sc = scoreboardCopy[i]
+        sc.game_id = lookupObj[sc.game_name]
         formattedData.push(sc)
     }
     return formattedData
 }
 
-exports.formatScoreboardSubjects=(scoreboard,subjects)=>{
-    if(subjects.length===0){
+exports.formatScoreboardTopics = (scoreboard, topics) => {
+    if (topics.length === 0) {
         return []
     }
-    const scoreboardCopy=[...scoreboard]
-    const subjectsCopy=[...subjects]
-    const formattedData=[]
-    const lookupObj= this.subjectsLookup(subjectsCopy)
+    const scoreboardCopy = [...scoreboard]
+    const topicsCopy = [...topics]
+    const formattedData = []
+    const lookupObj = this.topicsLookup(topicsCopy)
 
-    for (let i=0;i<scoreboardCopy.length;i++){
-        const sc= scoreboardCopy[i]
-        sc.subject_id= lookupObj[sc.subject]
-        formattedData.push(sc)
-    }
-    return formattedData
-}
-exports.formatStudyGroupTopics=(studyGroup,topics)=>{
-    if(topics.length===0){
-        return []
-    }
-    const studyGroupCopy=[...studyGroup]
-    const topicsCopy=[...topics]
-    const formattedData=[]
-    const lookupObj= this.topicsLookup(topicsCopy)
-
-    for (let i=0;i<studyGroupCopy.length;i++){
-        const sc= studyGroupCopy[i]
-        sc.topic_id= lookupObj[sc.topic]
+    for (let i = 0; i < scoreboardCopy.length; i++) {
+        const sc = scoreboardCopy[i]
+        sc.topic_id = lookupObj[sc.topic]
         formattedData.push(sc)
     }
     return formattedData
 }
 
-exports.formatTopicsSubjects=(topics,subjects)=>{
-    if(subjects.length===0){
+exports.formatScoreboardSubjects = (scoreboard, subjects) => {
+    if (subjects.length === 0) {
         return []
     }
-    const topicsCopy=[...topics]
-    const subjectsCopy=[...subjects]
-    const formattedData=[]
-    const lookupObj= this.subjectsLookup(subjectsCopy)
+    const scoreboardCopy = [...scoreboard]
+    const subjectsCopy = [...subjects]
+    const formattedData = []
+    const lookupObj = this.subjectsLookup(subjectsCopy)
 
-    for (let i=0;i<topicsCopy.length;i++){
-        const sc= topicsCopy[i]
-        sc.subject_id= lookupObj[sc.subject]
+    for (let i = 0; i < scoreboardCopy.length; i++) {
+        const sc = scoreboardCopy[i]
+        sc.subject_id = lookupObj[sc.subject]
+        formattedData.push(sc)
+    }
+    return formattedData
+}
+exports.formatStudyGroupSubjects = (studyGroup, subjects) => {
+    console.log(subjects)
+    if (subjects.length === 0) {
+        return []
+    }
+    const studyGroupCopy = [...studyGroup]
+    const subjectsCopy = [...subjects]
+    const formattedData = []
+    const lookupObj = this.subjectsLookup(subjectsCopy)
+
+    for (let i = 0; i < studyGroupCopy.length; i++) {
+        const sc = studyGroupCopy[i]
+        sc.subject_id = lookupObj[sc.subject]
         formattedData.push(sc)
     }
     return formattedData
 }
 
-exports.formatUsersGroup=(users,groups)=>{
-    if(groups.length===0){
+exports.formatTopicsSubjects = (topics, subjects) => {
+    if (subjects.length === 0) {
         return []
     }
-    const usersCopy=[...users]
-    const groupsCopy=[...groups]
-    const formattedData=[]
-    const lookupObj= this.groupsLookup(groupsCopy)
+    const topicsCopy = [...topics]
+    const subjectsCopy = [...subjects]
+    const formattedData = []
+    const lookupObj = this.subjectsLookup(subjectsCopy)
+
+    for (let i = 0; i < topicsCopy.length; i++) {
+        const sc = topicsCopy[i]
+        sc.subject_id = lookupObj[sc.subject]
+        formattedData.push(sc)
+    }
+    return formattedData
+}
+
+exports.formatUsersGroup = (users, groups) => {
+    if (groups.length === 0) {
+        return []
+    }
+    const usersCopy = [...users]
+    const groupsCopy = [...groups]
+    const formattedData = []
+    const lookupObj = this.groupsLookup(groupsCopy)
     console.log(lookupObj)
 
-    for (let i=0;i<usersCopy.length;i++){
-        const sc= usersCopy[i]
-        sc.group_id= lookupObj[sc.group]
+    for (let i = 0; i < usersCopy.length; i++) {
+        const sc = usersCopy[i]
+        sc.group_id = lookupObj[sc.group]
         formattedData.push(sc)
     }
     return formattedData
 }
 
-exports.formaCardPackTopics=(subjects,topics)=>{
-    if(topics.length===0){
+exports.formaCardPackTopics = (subjects, topics) => {
+    if (topics.length === 0) {
         return []
     }
-    const subjectsCopy=[...subjects]
-    const topicsCopy=[...topics]
-    const formattedData=[]
-    const lookupObj= this.topicsLookup(topicsCopy)
+    const subjectsCopy = [...subjects]
+    const topicsCopy = [...topics]
+    const formattedData = []
+    const lookupObj = this.topicsLookup(topicsCopy)
 
-    for (let i=0;i<subjectsCopy.length;i++){
-        const sc= subjectsCopy[i]
-        sc.topic_id= lookupObj[sc.topic]
+    for (let i = 0; i < subjectsCopy.length; i++) {
+        const sc = subjectsCopy[i]
+        sc.topic_id = lookupObj[sc.topic]
         formattedData.push(sc)
     }
     return formattedData

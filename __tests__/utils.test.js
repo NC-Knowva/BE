@@ -1,4 +1,4 @@
-const { topicsLookup, subjectsLookup, gamesLookup, formatScoreboardGames, formatScoreboardSubjects, formatScoreboardTopics, formaCardPackTopics, formatTopicsSubjects, formatUsersGroup, groupsLookup, formatStudyGroupTopics, formatUsersGroupStudyGroups } = require('../db/seeds/utils')
+const { topicsLookup, subjectsLookup, gamesLookup, formatScoreboardGames, formatScoreboardSubjects, formatScoreboardTopics, formaCardPackTopics, formatTopicsSubjects, formatUsersGroup, groupsLookup, formatStudyGroupSubjects, formatUsersGroupStudyGroups } = require('../db/seeds/utils')
 
 describe('topics lookup', () => {
     test('returns empty object if input array is empty', () => {
@@ -627,97 +627,48 @@ describe('format card pack topics!!', () => {
     })
 })
 
-describe('format study group topics!!', () => {
+describe('format study group SUBJECTS!!', () => {
     test('returns correct added key in obj with the id for multiple obj elements', () => {
         const sc = [{
             study_group: "Colobus",
-            admins: ["eforgan9"],
-            users: [
-                "tfolbigg3",
-                "lgurrado4",
-                "acranham7",
-                "eforgan9",
-                "ktrevaskiss6",
-                "ogladyer1",
-                "egirardini5",
-                "ggrishinov2",
-            ],
-            topic: "topic 1",
+            subject: "one",
             avatar_img_url:
                 "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
             created_at: "2023-10-04T00:00:00.000Z",
         },
         {
             study_group: "Bird",
-            admins: ["eforgan9"],
-            users: [
-                "aclaricoats0",
-                "ogladyer1",
-                "klease8",
-                "ktrevaskiss6",
-                "eforgan9",
-                "lgurrado4",
-                "acranham7",
-                "ggrishinov2",
-                "egirardini5",
-            ],
-            topic: "topic 2",
+            subject: "two",
             avatar_img_url:
                 "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
             created_at: "2023-11-04T00:00:00.000Z",
         }]
 
-        const topics = [
+        const subjects = [
             {
-                topic_id: 1,
-                topic_name: "topic 1",
-                eductaion: "GCSE",
-                subject: "Maths"
+                subject_id: 1,
+                subject_name: "one",
+                education: "A-level"
             },
             {
-                topic_id: 2,
-                topic_name: "topic 2",
-                eductaion: "GCSE",
-                subject: "Science"
-            }
-        ]
-        const output = formatStudyGroupTopics(sc, topics)
+                subject_id: 2,
+                subject_name: "two",
+                education: "GCSE"
+            } ]
+        const output = formatStudyGroupSubjects(sc, subjects)
         expect(output).toEqual(
             [{
-                topic_id: 1,
+                subject_id: 1,
                 study_group: "Colobus",
-                admins: ["eforgan9"],
-                users: [
-                    "tfolbigg3",
-                    "lgurrado4",
-                    "acranham7",
-                    "eforgan9",
-                    "ktrevaskiss6",
-                    "ogladyer1",
-                    "egirardini5",
-                    "ggrishinov2",
-                ],
-                topic: "topic 1",
+                subject: "one",
                 avatar_img_url:
                     "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
                 created_at: "2023-10-04T00:00:00.000Z",
             },
             {
-                topic_id: 2,
+                subject_id: 2,
                 study_group: "Bird",
-                admins: ["eforgan9"],
-                users: [
-                    "aclaricoats0",
-                    "ogladyer1",
-                    "klease8",
-                    "ktrevaskiss6",
-                    "eforgan9",
-                    "lgurrado4",
-                    "acranham7",
-                    "ggrishinov2",
-                    "egirardini5",
-                ],
-                topic: "topic 2",
+                subject: "two",
                 avatar_img_url:
                     "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
                 created_at: "2023-11-04T00:00:00.000Z",
@@ -742,35 +693,35 @@ describe('format USER GROUPS FROM STUDY_GROUP!!', () => {
 
         const group = [
             {
-                group_id:1,
-                study_group: "Colobus", 
+                group_id: 1,
+                study_group: "Colobus",
                 admins: "eforgan9",
                 topic: "topic 1",
                 avatar_img_url:
-                  "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
+                    "https://robohash.org/voluptateestmagnam.png?size=50x50&set=set1",
                 created_at: "2023-10-04T00:00:00.000Z",
-              },
-              {
-                group_id:2,
+            },
+            {
+                group_id: 2,
                 study_group: "Bird",
                 admins: "eforgan9",
                 topic: "topic 2",
                 avatar_img_url:
-                  "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
+                    "https://robohash.org/etminimaoccaecati.png?size=50x50&set=set1",
                 created_at: "2023-11-04T00:00:00.000Z",
-              }
+            }
         ]
         const output = formatUsersGroupStudyGroups(sc, group)
         expect(output).toEqual(
             [
                 {
-                    group_id:1,
+                    group_id: 1,
                     username: "tfolbigg3",
                     group: "Colobus",
                     role: "member"
                 },
                 {
-                    group_id:2,
+                    group_id: 2,
                     username: "lgurrado4",
                     group: "Bird",
                     role: "member"

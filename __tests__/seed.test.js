@@ -609,15 +609,15 @@ describe("seed", () => {
                 });
         })
 
-        test('study_group table has topic_id column as int', () => {
+        test('study_group table has subject_id column as int', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'study_group'
-                    AND column_name = 'topic_id';`
+                    AND column_name = 'subject_id';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('topic_id');
+                    expect(column.column_name).toBe('subject_id');
                     expect(column.data_type).toBe('integer');
                 });
         })
@@ -786,7 +786,7 @@ describe("seed", () => {
         })
     })
 
-    describe.only('scoreboard', () => {
+    describe('scoreboard', () => {
         test('scoreboard table exists', () => {
             return db
                 .query(
@@ -1152,6 +1152,7 @@ describe("seed", () => {
                 expect(study_group).toHaveLength(5);
                 study_group.forEach((group) => {
                 expect(group).toHaveProperty('group_id');
+                expect(group).toHaveProperty('subject_id');
                 expect(group).toHaveProperty('group_name');
                 expect(group).toHaveProperty('avatar_img_url');
                 expect(group).toHaveProperty('created_at');
@@ -1172,7 +1173,7 @@ describe("seed", () => {
                 expect(pack).toHaveProperty('description');
                 expect(pack).toHaveProperty('education_id');
                 expect(pack).toHaveProperty('visibility');
-                expect(pack).toHaveProperty('qustions');
+                expect(pack).toHaveProperty('questions');
                 });
             });
         });        

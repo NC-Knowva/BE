@@ -5,7 +5,7 @@ module.exports = [
     name: "Topic 1 Card Pack",
     description:
       "A set of study cards for topic 1 covering fundamental concepts.",
-    education: "2",
+    education: "two",
     visibility: true,
     questions:
     {
@@ -23,7 +23,7 @@ module.exports = [
     name: "Topic 2 Card Pack",
     description:
       "A set of study cards for topic 2 covering key concepts and ideas.",
-    education: "1",
+    education: "one",
     visibility: true,
     questions:
     {
@@ -41,7 +41,7 @@ module.exports = [
     name: "Topic 3 Card Pack",
     description:
       "A set of study cards for topic 3, focusing on core principles.",
-    education: "1",
+    education: "one",
     visibility: true,
     questions:
     {
@@ -59,7 +59,7 @@ module.exports = [
     name: "Topic 4 Card Pack",
     description:
       "This pack contains study cards for topic 4 with detailed explanations.",
-    education: "2",
+    education: "two",
     visibility: true,
     questions:
     {
@@ -77,7 +77,7 @@ module.exports = [
     name: "Topic 5 Card Pack",
     description:
       "A study pack for topic 5 featuring essential review questions.",
-    education: "2",
+    education: "two",
     visibility: true,
     questions:
     {

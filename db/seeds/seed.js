@@ -1,6 +1,7 @@
 const db = require("../connection")
 const format = require('pg-format');
-const { formatScoreboardSubjects, formatScoreboardTopics, formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupTopics, formatUsersGroupStudyGroups } = require('./utils')
+const { topicsLookup, subjectsLookup, } = require('./utils')
+const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects } = require('./utils')
 
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
@@ -101,7 +102,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query(`CREATE TABLE study_group (
             group_id  SERIAL PRIMARY KEY,
             group_name VARCHAR(100),
-            topic_id INT REFERENCES topics(topic_id),
+            subject_id INT REFERENCES subjects(subject_id),
             avatar_img_url TEXT,
             created_at TIMESTAMP
             );`)
@@ -118,7 +119,6 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             questions JSON 
             );`)
         })
-        //JSON SHOULD BE ARRAY INSTEAD???
         .then(() => {
             return db.query(`CREATE TABLE scoreboard (
             score_id SERIAL PRIMARY KEY,
@@ -163,7 +163,6 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
                 formattedInsertValues)
 
             return db.query(insertQuery);
-            //SETTINGS AND CALANEDER??????
         })
         .then(() => {
             const formattedInsertValues = message_activity.map((message) => {
@@ -177,52 +176,51 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
 
             return db.query(insertQuery)
         })
-        //         // LOOKUP FOR SUBJECT
-        // .then(() => {
-        //     const formattedInsertValues = user_group_junction.map((users) => {
-        //         return [users.username, users.group, users.role]
-        //     })
-        //     const insertQuery = format(`insert into users_group_junction
-        //                 (username, group_id, role)
-        //                 values
-        //                 %L
-        //                 returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        //     //LOOKUP FOR GROUP_NAME/id
-        // })
         .then(() => {
             const formattedInsertValues = subjects.map((sub) => {
                 return [sub.subject_name, sub.education]
             })
             const insertQuery = format(`insert into subjects
-                                    (subject_name, education_id)
-                                    values
-                                    %L
-                                    returning *`, formattedInsertValues)
+                (subject_name, education_id)
+                values
+                %L
+                returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
         .then((insertedSubject) => {
-            subjectsInserted = insertedSubject.rows
-            const formattedInsertValues = formatTopicsSubjects(topics, insertedSubject.rows).map((topic) => {
+            subjectsInserted= insertedSubject.rows
+            const formattedInsertValues = formatTopicsSubjects(topics, subjectsInserted).map((topic) => {
                 return [topic.topic_name, topic.education, topic.subject_id]
             })
             const insertQuery = format(`insert into topics
-            (topic_name, education_id, subject_id)
-             values 
-             %L
-             returning *`, formattedInsertValues)
+                    (topic_name, education_id, subject_id)
+                    values 
+                    %L
+                    returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
-        .then((insertedTopics) => {
-            topicsInserted = insertedTopics.rows
-            const formattedInsertValues = formatStudyGroupTopics(study_group, insertedTopics.rows).map((study) => {
-                return [study.study_group, study.topic_id, study.avatar_img_url, study.created_at]
+        .then((tops) => {
+            topicsInserted=tops.rows
+            const formattedInsertValues = formatStudyGroupSubjects(study_group, subjectsInserted).map((study) => {
+                return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
             })
             const insertQuery = format(`insert into study_group
-             (group_name,topic_id,avatar_img_url,created_at)
-             values
-             %L
-             returning *`, formattedInsertValues)
+                        (group_name,subject_id,avatar_img_url,created_at)
+                        values
+                        %L
+                        returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then((insertedGroups) => {
+
+            const formattedInsertValues = formatUsersGroup(user_group_junction, insertedGroups.rows).map((users) => {
+                return [users.username, users.group_id, users.role]
+            })
+            const insertQuery = format(`insert into users_group_junction
+                                    (username, group_id, role)
+                                    values
+                                    %L
+                                    returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
         .then(() => {
@@ -230,10 +228,10 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
                 return [card.username, card.topic_id, card.name, card.description, card.education, card.visibility, card.questions]
             })
             const insertQuery = format(`insert into card_pack
-                (username,topic_id,name,description,education_id,visibility,questions)
-                values
-                %L
-                returning *`, formattedInsertValues)
+                            (username,topic_id,name,description,education_id,visibility,questions)
+                            values
+                            %L
+                            returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
         .then(() => {
@@ -242,20 +240,27 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             });
 
             const insertQuery = format(`INSERT INTO games
-             (game_name, username, game_type, subject_name, topic_name, auto_generated_code, created_at)
-             VALUES
-             %L
-             RETURNING *;`,
+                                (game_name, username, game_type, subject_name, topic_name, auto_generated_code, created_at)
+                                VALUES
+                                %L
+                                RETURNING *;`,
                 formattedInsertValues)
             return db.query(insertQuery);
         })
-        .then((gamesInserted) => {
-            //GETTING THE ID FOR MULTIPLE FK IN SCOREBAORD USING THE FORMAT FUCNTIONS
+        .then((gamesData) => {
+            const top = topicsLookup(topicsInserted)
+            const sub = subjectsLookup(subjectsInserted)
+
+            const formattedInsertValues = formatScoreboardGames(scoreboard, gamesData.rows).map((scoreb) => {
+                return [
+                    scoreb.username, scoreb.game_id, scoreb[top.topic_id], scoreb[sub.subject_id], scoreb.score
+                ]
+            })
             const insertQuery = format(`insert into scoreboard 
-            (username,game_id,topic_id,subject_id,score)
-            values
-            %L
-            returning *;`, formattedInsertValues)
+                                    (username,game_id,topic_id,subject_id,score)
+                                    values
+                                    %L
+                                    returning *;`, formattedInsertValues)
 
 
             return db.query(insertQuery)
@@ -268,6 +273,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             const insertQuery = format(`insert into friends
         (username, friend, created_at)
         values
+        %L
         returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
