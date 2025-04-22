@@ -1,5 +1,5 @@
 module.exports = [
-    {
+    { //change
         name: "Maths revision",
         username: "Knowva",
         topic: "Decimals and fractions",
