@@ -1,5 +1,5 @@
 exports.card_pack= require('./cardPack')
-exports.education= require('./education')
+exports.education_level= require('./education')
 exports.games= require('./games')
 exports.message_activity= require('./message_activity')
 exports.study_group= require('./study_group')
