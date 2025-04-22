@@ -55,15 +55,12 @@ exports.formatUsersGroupStudyGroups = (userGroup, studyGroup) => {
     const studyGroupCopy = [...studyGroup]
     const formattedData = []
     const lookupObj = this.groupsLookup(studyGroupCopy)
-    console.log(lookupObj)
 
     for (let i = 0; i < userGroupCopy.length; i++) {
         const sc = userGroupCopy[i]
-        // console.log(lookupObj[sc.group])
         sc.group_id = lookupObj[sc.group]
         formattedData.push(sc)
     }
-    // console.log(formattedData)
     return formattedData
 }
 exports.formatScoreboardGames = (scoreboard, games) => {
