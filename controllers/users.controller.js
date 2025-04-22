@@ -1,4 +1,4 @@
-const { selectUsers, selectUserByUsername, selectMessagesByUsername } = require("../models/users.model");
+const { selectUsers, selectUserByUsername, selectMessagesByUsername, selectStudyGroupsByUsername } = require("../models/users.model");
 
 exports.getUsers = (req, res, next) => {
     selectUsers()
@@ -20,6 +20,15 @@ exports.getMessagesByUsername = (req, res, next) => {
     selectMessagesByUsername(username)
     .then(({ rows }) => {
         res.status(200).send({ messages: rows })
+    })
+    .catch(err => next(err));
+};
+
+exports.getStudyGroupsByUsername = (req, res, next) => {
+    const { username } = req.params;
+    selectStudyGroupsByUsername(username)
+    .then(({ rows }) => {
+        res.status(200).send({ study_groups: rows })
     })
     .catch(err => next(err));
 };

@@ -33,3 +33,30 @@ exports.selectMessagesByUsername = (username) => {
       return data[0];
     });
 };
+
+exports.selectStudyGroupsByUsername = (username) => {
+    const queryStr = `
+        SELECT 
+            study_group.group_id, 
+            study_group.group_name, 
+            study_group.subject_id, 
+            study_group.avatar_img_url, 
+            study_group.created_at,
+            users_group_junction.username,
+            users_group_junction.role
+        FROM study_group 
+        JOIN users_group_junction ON study_group.group_id = users_group_junction.group_id
+        WHERE users_group_junction.username = $1
+        ORDER BY study_group.created_at DESC;
+    `;
+
+    const promises = [];
+    promises.push(checkExists("users", "username", username));
+    promises.unshift(
+      db.query(queryStr, [username])
+    );
+    return Promise.all(promises).then((data) => {
+        return data[0];
+    });
+};
+
