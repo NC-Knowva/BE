@@ -188,7 +188,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query(insertQuery)
         })
         .then((insertedSubject) => {
-            subjectsInserted= insertedSubject.rows
+            subjectsInserted = insertedSubject.rows
             const formattedInsertValues = formatTopicsSubjects(topics, subjectsInserted).map((topic) => {
                 return [topic.topic_name, topic.education, topic.subject_id]
             })
@@ -200,7 +200,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query(insertQuery)
         })
         .then((tops) => {
-            topicsInserted=tops.rows
+            topicsInserted = tops.rows
             const formattedInsertValues = formatStudyGroupSubjects(study_group, subjectsInserted).map((study) => {
                 return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
             })
@@ -264,7 +264,6 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
 
 
             return db.query(insertQuery)
-            //LOOKUP FUNC!!!!!!!
         })
         .then(() => {
             const formattedInsertValues = friends.map((friendd) => {

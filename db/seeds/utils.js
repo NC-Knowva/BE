@@ -114,7 +114,6 @@ exports.formatScoreboardSubjects = (scoreboard, subjects) => {
     return formattedData
 }
 exports.formatStudyGroupSubjects = (studyGroup, subjects) => {
-    console.log(subjects)
     if (subjects.length === 0) {
         return []
     }
@@ -156,7 +155,6 @@ exports.formatUsersGroup = (users, groups) => {
     const groupsCopy = [...groups]
     const formattedData = []
     const lookupObj = this.groupsLookup(groupsCopy)
-    console.log(lookupObj)
 
     for (let i = 0; i < usersCopy.length; i++) {
         const sc = usersCopy[i]
