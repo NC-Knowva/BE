@@ -38,7 +38,7 @@ exports.selectStudyGroupsByUsername = (username) => {
     const queryStr = `
         SELECT 
             study_group.group_id, 
-            study_group.group_name, 
+            study_group.study_group, 
             study_group.subject_id, 
             study_group.avatar_img_url, 
             study_group.created_at,
