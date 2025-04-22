@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const { getUsers, getUserByUsername, getMessagesByUsername, getStudyGroupsByUsername } = require("./controllers/users.controller");
 const { invalidPathController, psqlErrorHandler, customErrorHandler, serverErrorHandler } = require("./controllers/errors.controller");
+const { getSubjects } = require("./controllers/subjects.controller");
 
 app.use(cors());
 
@@ -15,6 +16,8 @@ app.get("/api/users/:username", getUserByUsername);
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
 app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
+
+app.get("/api/subjects", getSubjects);
 
 app.use(invalidPathController);
 
