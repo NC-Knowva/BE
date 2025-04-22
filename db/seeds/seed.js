@@ -1,7 +1,7 @@
 const db = require("../connection")
 const format = require('pg-format');
 const { topicsLookup, subjectsLookup, } = require('./utils')
-const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects } = require('./utils')
+const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects,formatUsersGroupStudyGroups } = require('./utils')
 //change
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
@@ -101,7 +101,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         .then(() => {
             return db.query(`CREATE TABLE study_group (
             group_id  SERIAL PRIMARY KEY,
-            group_name VARCHAR(100),
+            study_group VARCHAR(100),
             subject_id INT REFERENCES subjects(subject_id),
             avatar_img_url TEXT,
             created_at TIMESTAMP
@@ -132,13 +132,13 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         })
         .then(() => {
             return db.query(`CREATE TABLE users_group_junction (
-        users_group_id serial primary key,
-        role VARCHAR(50),
-        username VARCHAR(50) REFERENCES users(username),
-        group_id INT REFERENCES study_group(group_id)
-        );`)
-        })
-        .then(() => {
+                users_group_id serial primary key,
+                role VARCHAR(50),
+                username VARCHAR(50) REFERENCES users(username),
+                group_id INT REFERENCES study_group(group_id)
+                );`)
+            })
+            .then(() => {
             const formattedInsertValues = education_level.map((educations) => {
                 return [educations.education];
             });
@@ -203,15 +203,16 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
                 return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
             })
             const insertQuery = format(`insert into study_group
-                        (group_name,subject_id,avatar_img_url,created_at)
+                        (study_group,subject_id,avatar_img_url,created_at)
                         values
                         %L
                         returning *`, formattedInsertValues)
             return db.query(insertQuery)
         })
         .then((insertedGroups) => {
-
-            const formattedInsertValues = formatUsersGroup(user_group_junction, insertedGroups.rows).map((users) => {
+            console.log(insertedGroups.rows)
+            const formattedInsertValues = formatUsersGroupStudyGroups(user_group_junction, insertedGroups.rows).map((users) => {
+                console.log(users)
                 return [users.username, users.group_id, users.role]
             })
             const insertQuery = format(`insert into users_group_junction
