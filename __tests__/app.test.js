@@ -3,6 +3,7 @@ const app = require("../app");
 const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index.js");
 const db = require("../db/connection");
+const { json } = require("express");
 
 beforeEach(() => seed(data));
 afterAll(() => db.end());
@@ -215,4 +216,29 @@ describe("GET /api/topics", ()=>{
 
   })
   
+})
+
+describe("GET /api/cards",()=>{
+  test("200: Responds with an array of objects with Card details.",()=>{
+    return request(app)
+    .get("/api/cards")
+    .expect(200)
+    .then(({body})=>{
+      const cards = body.cards;
+      expect(cards.length).toBe(5)
+  
+      cards.forEach((card) => {
+        expect(card).toMatchObject({
+          pack_id: expect.any(Number),
+          username: expect.any(String),
+          topic_id: expect.any(Number),
+          name: expect.any(String),
+          description: expect.any(String),          
+          education_id: expect.any(String),
+          visibility: expect.any(Boolean),
+          questions: expect.any(JSON)
+        })          
+      });      
+    })
+  })
 })
