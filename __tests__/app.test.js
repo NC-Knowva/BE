@@ -192,3 +192,27 @@ test("200: Responds with an array of object with subject details.",()=>{
 })
 });
 
+describe("GET /api/topics", ()=>{
+
+  test("200: Responds with an array of object with topic details.",()=>{
+    return request(app)
+    .get("/api/topics")
+    .expect(200)
+    .then(({body})=>{
+      const topics = body.topics;
+      expect(topics.length).toBe(6)
+  
+      topics.forEach((topic) => {
+        expect(topic).toMatchObject({
+          topic_id: expect.any(Number),
+          subject_id: expect.any(Number),
+          topic_name: expect.any(String),
+          education_id: expect.any(String)
+        })          
+      });
+
+    })
+
+  })
+  
+})
