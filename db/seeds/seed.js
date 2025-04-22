@@ -152,16 +152,14 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         })
         .then(() => {
             const formattedInsertValues = users.map((user) => {
-                return [user.username, user.name, user.avatar_img_url, user.education_id, user.created_at];
+                return [user.username, user.name, user.avatar_img_url, user.education, user.created_at];
             });
-
             const insertQuery = format(`INSERT INTO users
                     (username,name,avatar_img_url,education_id, created_at )
                     VALUES
                     %L
                     RETURNING *;`,
                 formattedInsertValues)
-
             return db.query(insertQuery);
         })
         .then(() => {
