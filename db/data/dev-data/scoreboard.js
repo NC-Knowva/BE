@@ -36,15 +36,6 @@ module.exports = [
     created_at: "2023-05-01T00:00:00.000Z",
   },
   {
-    username: "ogladyer1",
-    game_type: "quiz",
-    game_name: "Mathletics Showdown",
-    topic: "Decimals and fractions",
-    subject: "Maths",
-    score: { correct: 10, incorrect: 0, time: 85 },
-    created_at: "2023-05-01T00:00:00.000Z",
-  },
-  {
     username: "study_basher",
     game_type: "sort",
     game_name: "Fact Lab",

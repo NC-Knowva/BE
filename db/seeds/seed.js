@@ -2,7 +2,7 @@ const db = require("../connection")
 const format = require('pg-format');
 const { topicsLookup, subjectsLookup, } = require('./utils')
 const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects } = require('./utils')
-
+//change
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
     let topicsInserted
