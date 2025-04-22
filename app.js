@@ -8,6 +8,7 @@ const { getGames } = require("./controllers/games.controller");
 const { getUsers, getUserByUsername, getMessagesByUsername, getStudyGroupsByUsername } = require("./controllers/users.controller");
 const { invalidPathController, psqlErrorHandler, customErrorHandler, serverErrorHandler } = require("./controllers/errors.controller");
 const { getSubjects } = require("./controllers/subjects.controller");
+const { getTopics } = require("./controllers/topics.controller");
 
 
 app.use(cors());
@@ -27,6 +28,7 @@ app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
 
 app.get("/api/subjects", getSubjects);
 
+app.get("/api/topics", getTopics);
 
 app.use(invalidPathController);
 
