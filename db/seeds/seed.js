@@ -2,7 +2,6 @@ const db = require("../connection")
 const format = require('pg-format');
 const { topicsLookup, subjectsLookup, } = require('./utils')
 const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects,formatUsersGroupStudyGroups } = require('./utils')
-//change
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
     let topicsInserted
@@ -199,6 +198,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         })
         .then((tops) => {
             topicsInserted = tops.rows
+            console.log(tops.rows)
             const formattedInsertValues = formatStudyGroupSubjects(study_group, subjectsInserted).map((study) => {
                 return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
             })
@@ -210,9 +210,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query(insertQuery)
         })
         .then((insertedGroups) => {
-            console.log(insertedGroups.rows)
             const formattedInsertValues = formatUsersGroupStudyGroups(user_group_junction, insertedGroups.rows).map((users) => {
-                console.log(users)
                 return [users.username, users.group_id, users.role]
             })
             const insertQuery = format(`insert into users_group_junction
@@ -252,7 +250,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
 
             const formattedInsertValues = formatScoreboardGames(scoreboard, gamesData.rows).map((scoreb) => {
                 return [
-                    scoreb.username, scoreb.game_id, scoreb[top.topic_id], scoreb[sub.subject_id], scoreb.score, scoreb.created_at
+                    scoreb.username, scoreb.game_id, top[scoreb.topic], sub[scoreb.subject], scoreb.score, scoreb.created_at
                 ]
             })
             const insertQuery = format(`insert into scoreboard 
