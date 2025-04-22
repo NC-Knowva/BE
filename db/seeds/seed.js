@@ -198,7 +198,6 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         })
         .then((tops) => {
             topicsInserted = tops.rows
-            console.log(tops.rows)
             const formattedInsertValues = formatStudyGroupSubjects(study_group, subjectsInserted).map((study) => {
                 return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
             })

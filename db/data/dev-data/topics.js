@@ -7,7 +7,7 @@ module.exports = [
     {
         topic_name: "Genetic engineering",
         education: "GCSE",
-        subject: "Science"
+        subject: "Biology"
     },
     {
         topic_name: "Medical Renaissance",
@@ -67,6 +67,6 @@ module.exports = [
     {
         topic_name: "Biochemical Reactions in Cells",
         education: "A-level",
-        subject: "Science"
+        subject:"Chemistry"
     }
 ]
