@@ -1189,6 +1189,7 @@ describe("seed", () => {
                 expect(score).toHaveProperty('topic_id');
                 expect(score).toHaveProperty('subject_id');
                 expect(score).toHaveProperty('score');
+                expect(score).toHaveProperty('created_at');
                 });
             });
         });     

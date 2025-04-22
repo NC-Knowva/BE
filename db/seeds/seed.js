@@ -253,11 +253,11 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
 
             const formattedInsertValues = formatScoreboardGames(scoreboard, gamesData.rows).map((scoreb) => {
                 return [
-                    scoreb.username, scoreb.game_id, scoreb[top.topic_id], scoreb[sub.subject_id], scoreb.score
+                    scoreb.username, scoreb.game_id, scoreb[top.topic_id], scoreb[sub.subject_id], scoreb.score, scoreb.created_at
                 ]
             })
             const insertQuery = format(`insert into scoreboard 
-                                    (username,game_id,topic_id,subject_id,score)
+                                    (username,game_id,topic_id,subject_id,score, created_at)
                                     values
                                     %L
                                     returning *;`, formattedInsertValues)
