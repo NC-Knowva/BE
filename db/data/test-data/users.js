@@ -1,10 +1,11 @@
 module.exports = [
+  //change
   {
     username: "aclaricoats0",
     name: "Addia Claricoats",
     avatar_img_url:
       "https://robohash.org/verodoloremfuga.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-01T00:00:00.000Z"
@@ -14,7 +15,7 @@ module.exports = [
     name: "Otha Gladyer",
     avatar_img_url:
       "https://robohash.org/nulladistinctioet.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-02T00:00:00.000Z"
@@ -24,7 +25,7 @@ module.exports = [
     name: "Graig Grishinov",
     avatar_img_url:
       "https://robohash.org/quistemporibussoluta.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-03T00:00:00.000Z"
@@ -34,7 +35,7 @@ module.exports = [
     name: "Torrie Folbigg",
     avatar_img_url:
       "https://robohash.org/quodolorumvoluptatem.png?size=50x50&set=set1",
-    education: "2",
+    education: "two",
     settings: {},
     calendar: {},
     created_at: "2023-05-04T00:00:00.000Z"
@@ -44,7 +45,7 @@ module.exports = [
     name: "Louie Gurrado",
     avatar_img_url:
       "https://robohash.org/quosfaceresunt.png?size=50x50&set=set1",
-    education: "2",
+    education: "two",
     settings: {},
     calendar: {},
     created_at: "2023-05-05T00:00:00.000Z"
@@ -54,7 +55,7 @@ module.exports = [
     name: "Esme Girardini",
     avatar_img_url:
       "https://robohash.org/etdoloremeveniet.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-01T00:00:00.000Z"
@@ -64,7 +65,7 @@ module.exports = [
     name: "Konstanze Trevaskiss",
     avatar_img_url:
       "https://robohash.org/dictadoloremdignissimos.png?size=50x50&set=set1",
-    education: "2",
+    education: "two",
     settings: {},
     calendar: {},
     created_at: "2023-05-07T00:00:00.000Z"
@@ -74,7 +75,7 @@ module.exports = [
     name: "Alard Cranham",
     avatar_img_url:
       "https://robohash.org/inistetempore.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-08T00:00:00.000Z"
@@ -84,7 +85,7 @@ module.exports = [
     name: "Kaitlyn Lease",
     avatar_img_url:
       "https://robohash.org/voluptasvoluptatemdeserunt.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-09T00:00:00.000Z"
@@ -94,7 +95,7 @@ module.exports = [
     name: "Erik Forgan",
     avatar_img_url:
       "https://robohash.org/quiaetdoloribus.png?size=50x50&set=set1",
-    education: "1",
+    education: "one",
     settings: {},
     calendar: {},
     created_at: "2023-05-10T00:00:00.000Z"

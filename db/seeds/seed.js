@@ -1,12 +1,19 @@
 const db = require("../connection")
 const format = require('pg-format');
-
+const { topicsLookup, subjectsLookup, } = require('./utils')
+const { formatTopicsSubjects, formatScoreboardGames, formatUsersGroup, formaCardPackTopics, formatStudyGroupSubjects,formatUsersGroupStudyGroups } = require('./utils')
+//change
 
 const seed = ({ games, education_level, users, message_activity, scoreboard, study_group, topics, user_group_junction, subjects, card_pack, friends }) => {
+    let topicsInserted
+    let subjectsInserted
 
     return db.query("DROP TABLE IF EXISTS scoreboard")
         .then(() => {
             return db.query("DROP TABLE IF EXISTS card_pack")
+        })
+        .then(() => {
+            return db.query("DROP TABLE IF EXISTS users_group_junction")
         })
         .then(() => {
             return db.query("DROP TABLE IF EXISTS study_group")
@@ -21,6 +28,9 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query("DROP TABLE IF EXISTS message_activity")
         })
         .then(() => {
+            return db.query("DROP TABLE IF EXISTS friends")
+        })
+        .then(() => {
             return db.query("DROP TABLE IF EXISTS users")
         })
         .then(() => {
@@ -30,17 +40,15 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query("DROP TABLE IF EXISTS games")
         })
         .then(() => {
-            return db.query("DROP TABLE IF EXISTS users_group_junction")
-        })
-        .then(() => {
             return db.query(`CREATE TABLE games (
-            game_name VARCHAR(300) PRIMARY KEY,
+            game_id SERIAL PRIMARY KEY,
+            game_name VARCHAR(300),
             game_type VARCHAR(50),
             subject_name VARCHAR(50),
             username VARCHAR(50),
             topic_name VARCHAR(50),
             auto_generated_code VARCHAR(50),
-            time_stamp TIMESTAMP);`)
+            created_at TIMESTAMP);`)
         })
         .then(() => {
             return db.query(`CREATE TABLE education_level (
@@ -54,207 +62,219 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             education_id VARCHAR(50) REFERENCES education_level(education),
             settings JSON,
             calendar JSON,
-            time_stamp TIMESTAMP
+            created_at TIMESTAMP
             );`)
 
         })
         .then(() => {
+            return db.query(`CREATE TABLE friends (
+                friend_id SERIAL PRIMARY KEY,
+                username VARCHAR(50) REFERENCES users(username),
+                friend VARCHAR(50) REFERENCES users(username),
+                created_at TIMESTAMP
+                )`)
+        })
+        .then(() => {
             return db.query(`CREATE TABLE message_activity (
-            dm_id BIGINT PRIMARY KEY,
+            dm_id SERIAL PRIMARY KEY,
             sender_username VARCHAR(50) REFERENCES users(username),
             receiver_username VARCHAR(50) REFERENCES users(username),
             body TEXT,
-            time_stamp TIMESTAMP
+            created_at TIMESTAMP
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE subjects (
-            subject_id BIGINT PRIMARY KEY,
+            subject_id SERIAL PRIMARY KEY,
             subject_name VARCHAR(50),
             education_id VARCHAR(50) REFERENCES education_level(education)
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE topics (
-            topic_id BIGINT PRIMARY KEY,
+            topic_id SERIAL PRIMARY KEY,
             topic_name VARCHAR(50),
             education_id VARCHAR(50) REFERENCES education_level(education),
-            subject_id BIGINT REFERENCES subjects(subject_id)
+            subject_id INT REFERENCES subjects(subject_id)
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE study_group (
-            group_name VARCHAR PRIMARY KEY,
-            admins JSON,
-            users JSON,
-            topic_id BIGINT REFERENCES topics(topic_id),
+            group_id  SERIAL PRIMARY KEY,
+            study_group VARCHAR(100),
+            subject_id INT REFERENCES subjects(subject_id),
             avatar_img_url TEXT,
-            time_stamp TIMESTAMP
+            created_at TIMESTAMP
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE card_pack (
-            pack_id BIGINT PRIMARY KEY,
-            username VARCHAR(50),
-            topic_id BIGINT,
-            name BIGINT,
+            pack_id SERIAL PRIMARY KEY,
+            username VARCHAR(50) REFERENCES users(username) ,
+            topic_id INT REFERENCES topics(topic_id),
+            name VARCHAR(150),
             description TEXT,
             education_id VARCHAR(50) REFERENCES education_level(education),
-            visibility BIGINT,
-            questions JSON
+            visibility BOOLEAN,
+            questions JSON 
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE scoreboard (
-            score_id BIGINT PRIMARY KEY,
-            username VARCHAR(50),
-            game_name VARCHAR(300) REFERENCES games(game_name),
-            topic_id BIGINT,
-            subject_id BIGINT,
+            score_id SERIAL PRIMARY KEY,
+            username VARCHAR(50) REFERENCES users(username),
+            game_id INT REFERENCES games(game_id),
+            topic_id INT REFERENCES topics(topic_id),
+            subject_id INT REFERENCES subjects(subject_id),
             score JSON,
-            game_type VARCHAR(50)
+            created_at TIMESTAMP
             );`)
         })
         .then(() => {
             return db.query(`CREATE TABLE users_group_junction (
-        role VARCHAR(50),
-        username VARCHAR(50),
-        group_name VARCHAR(50)
-        );`)
-        })
-        .then(() => {
-            const formattedInsertValues = games.map((game) => {
-                return [game.game_name, game.username, game.game_type, game.subject, game.topic, game.autoGeneratedCode];
-            });
-
-            //make a call to format with vlues in games
-
-            const insertQuery = format(`INSERT INTO games
-                          (game_name, username, game_type,  subject_name, topic_name,auto_generated_code)
-                          VALUES
-                          %L
-                          RETURNING *;`,
-                formattedInsertValues)
-            return db.query(insertQuery);
-        })
-        .then(() => {
+                users_group_id serial primary key,
+                role VARCHAR(50),
+                username VARCHAR(50) REFERENCES users(username),
+                group_id INT REFERENCES study_group(group_id)
+                );`)
+            })
+            .then(() => {
             const formattedInsertValues = education_level.map((educations) => {
                 return [educations.education];
             });
-            //make a call to format with vlues in education_level
             const insertQuery = format(`INSERT INTO education_level
-                          (education)
-                          VALUES
-                          %L
-                          RETURNING *;`,
+                (education)
+                VALUES
+                %L
+                RETURNING *;`,
                 formattedInsertValues)
             return db.query(insertQuery);
         })
         .then(() => {
             const formattedInsertValues = users.map((user) => {
-                return [user.username, user.name, user.avatar_img_url, user.education_id];
-                //,user.settings, user.calendar
-                //,settings, calendar
+                return [user.username, user.name, user.avatar_img_url, user.education, user.created_at];
             });
-
-            //make a call to format with vlues in users
             const insertQuery = format(`INSERT INTO users
-                        (username,name,avatar_img_url,education_id )
-                        VALUES
-                        %L
-                        RETURNING *;`,
+                    (username,name,avatar_img_url,education_id, created_at )
+                    VALUES
+                    %L
+                    RETURNING *;`,
                 formattedInsertValues)
-
             return db.query(insertQuery);
         })
-        // .then(() => {
-        //     const formattedInsertValues = message_activity.map((message) => {
-        //         return [message.sender_username, message.receiver_username, message.body, message.created_at]
-        //     })
-        //     const insertQuery = format(`insert into message_activity 
-        //     (sender_username,receiver_username,body,created_at)
-        //     values
-        //     %L
-        //     returning *`, formattedInsertValues)
+        .then(() => {
+            const formattedInsertValues = message_activity.map((message) => {
+                return [message.sender_username, message.receiver_username, message.body, message.created_at]
+            })
+            const insertQuery = format(`insert into message_activity 
+                        (sender_username,receiver_username,body,created_at)
+                        values
+                        %L
+                        returning *`, formattedInsertValues)
 
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = scoreboard.map((scoreb) => {
-        //         return [scoreb.username, scoreb.game_name, scoreb.game_type, scoreb.topic, scoreb.subject, scoreb.score]
-        //     })
-        //     const insertQuery = format(`insert into scoreboard 
-        //         (username,game_name,game_type,topic,subject,score)
-        //         values
-        //         %L
-        //         returning *;`,formattedInsertValues)
-        //         return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = study_group.map((study) => {
-        //         return [study.study_group, study.admins, study.users, study.topic_id, study.avatar_img_url, study.created_at]
-        //     })
-        //     const insertQuery = format(`insert into study_group
-        //         (study_group,admins,users,topic_id,avatar_img_url,created_at)
-        //         values
-        //         %L
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = topics.map((topic) => {
-        //         return [topic.topic_name, topic.education, topic.subject]
-        //     })
-        //     const insertQuery = format(`insert into topics
-        //         (topic_name, education, subject)
-        //         values 
-        //         %L
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = user_group_junction.map((users) => {
-        //         return [users.username, users.group, users.role]
-        //     })
-        //     const insertQuery = format(`insert into users_group_junction
-        //         (username, group_name, role)
-        //         values
-        //         %L
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = subjects.map((sub) => {
-        //         return [sub.subject_name, sub.education]
-        //     })
-        //     const insertQuery = format(`insert into subjects
-        //         (subject_name, education_id)
-        //         values
-        //         %L
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = card_pack.map((card) => {
-        //         return [card.username, card.topic, card.name, card.description, card.education, card.visibility, card.questions]
-        //     })
-        //     const insertQuery = format(`insert into card_pack
-        //         (username,topic,name,description,education,visibility,questions)
-        //         values
-        //         %L
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
-        // .then(() => {
-        //     const formattedInsertValues = friends.map((friendd) => {
-        //         return [friendd.username, friendd.friend, friendd.created_at]
-        //     })
-        //     const insertQuery = format(`insert into friends
-        //         (username, friend, created_at)
-        //         values
-        //         returning *`, formattedInsertValues)
-        //     return db.query(insertQuery)
-        // })
+            return db.query(insertQuery)
+        })
+        .then(() => {
+            const formattedInsertValues = subjects.map((sub) => {
+                return [sub.subject_name, sub.education]
+            })
+            const insertQuery = format(`insert into subjects
+                (subject_name, education_id)
+                values
+                %L
+                returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then((insertedSubject) => {
+            subjectsInserted = insertedSubject.rows
+            const formattedInsertValues = formatTopicsSubjects(topics, subjectsInserted).map((topic) => {
+                return [topic.topic_name, topic.education, topic.subject_id]
+            })
+            const insertQuery = format(`insert into topics
+                    (topic_name, education_id, subject_id)
+                    values 
+                    %L
+                    returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then((tops) => {
+            topicsInserted = tops.rows
+            const formattedInsertValues = formatStudyGroupSubjects(study_group, subjectsInserted).map((study) => {
+                return [study.study_group, study.subject_id, study.avatar_img_url, study.created_at]
+            })
+            const insertQuery = format(`insert into study_group
+                        (study_group,subject_id,avatar_img_url,created_at)
+                        values
+                        %L
+                        returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then((insertedGroups) => {
+            console.log(insertedGroups.rows)
+            const formattedInsertValues = formatUsersGroupStudyGroups(user_group_junction, insertedGroups.rows).map((users) => {
+                console.log(users)
+                return [users.username, users.group_id, users.role]
+            })
+            const insertQuery = format(`insert into users_group_junction
+                                    (username, group_id, role)
+                                    values
+                                    %L
+                                    returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then(() => {
+            const formattedInsertValues = formaCardPackTopics(card_pack, topicsInserted).map((card) => {
+                return [card.username, card.topic_id, card.name, card.description, card.education, card.visibility, card.questions]
+            })
+            const insertQuery = format(`insert into card_pack
+                            (username,topic_id,name,description,education_id,visibility,questions)
+                            values
+                            %L
+                            returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
+        .then(() => {
+            const formattedInsertValues = games.map((game) => {
+                return [game.game_name, game.username, game.game_type, game.subject, game.topic, game.autoGeneratedCode, game.created_at];
+            });
+
+            const insertQuery = format(`INSERT INTO games
+                                (game_name, username, game_type, subject_name, topic_name, auto_generated_code, created_at)
+                                VALUES
+                                %L
+                                RETURNING *;`,
+                formattedInsertValues)
+            return db.query(insertQuery);
+        })
+        .then((gamesData) => {
+            const top = topicsLookup(topicsInserted)
+            const sub = subjectsLookup(subjectsInserted)
+
+            const formattedInsertValues = formatScoreboardGames(scoreboard, gamesData.rows).map((scoreb) => {
+                return [
+                    scoreb.username, scoreb.game_id, scoreb[top.topic_id], scoreb[sub.subject_id], scoreb.score, scoreb.created_at
+                ]
+            })
+            const insertQuery = format(`insert into scoreboard 
+                                    (username,game_id,topic_id,subject_id,score, created_at)
+                                    values
+                                    %L
+                                    returning *;`, formattedInsertValues)
+
+
+            return db.query(insertQuery)
+        })
+        .then(() => {
+            const formattedInsertValues = friends.map((friendd) => {
+                return [friendd.username, friendd.friend, friendd.created_at]
+            })
+            const insertQuery = format(`insert into friends
+        (username, friend, created_at)
+        values
+        %L
+        returning *`, formattedInsertValues)
+            return db.query(insertQuery)
+        })
 }
 
 module.exports = seed;

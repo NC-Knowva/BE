@@ -1,13 +1,14 @@
 {
   "name": "be",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "listen.js",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "seed-dev": "node ./db/seeds/run-seed.js",
     "test": "jest",
     "start": "node listen.js",
-    "test-seed": "jest seed.test.js"
+    "test-seed": "jest seed.test.js",
+    "seed-prod": "NODE_ENV=production npm run seed-dev"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,13 @@
     "jest-sorted": "^1.0.15",
     "pg": "^8.14.1",
     "pg-format": "^1.0.4",
+    "prettier": "^3.5.3",
     "supertest": "^7.1.0"
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "jest-extended/all",
+      "jest-sorted"
+    ]
   }
 }

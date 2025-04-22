@@ -1,8 +1,8 @@
 module.exports = [
   {
-    education: "1"
+    education: "one"
   },
   {
-    education: "2"
+    education: "two"
   }
 ];

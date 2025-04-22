@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
-const data = require("../db/data/test-data");
+const data = require("../db/data/test-data/index.js");
 const db = require("../db/connection");
 
 beforeEach(() => seed(data));
@@ -27,7 +27,7 @@ describe("GET /api/users", () => {
       education_id: expect.any(String),
       settings: expect.any(Object),
       calendar: expect.any(Object),
-      time_stamp: expect.any(String),
+      created_at: expect.any(String),
     };
 
     return request(app)
@@ -49,11 +49,11 @@ describe("GET /api/users/:username", () => {
       name: "Addia Claricoats",
       avatar_img_url:
         "https://robohash.org/verodoloremfuga.png?size=50x50&set=set1",
-      education_id: "1",
+      education_id: "one",
       settings: expect.any(Object),
       calendar: expect.any(Object),
-      time_stamp: expect.any(String),
-    };
+      created_at: expect.any(String),
+    }
 
     return request(app)
       .get("/api/users/aclaricoats0")
@@ -103,3 +103,71 @@ describe("GET /api/games", () => {
   });
 });
 
+describe("GET /api/users/:username/messages", () => {
+  test("200: Responds with an array of messages for the given username, sorted by most recent first", () => {
+
+    const expectedMessage = {
+      sender_username: expect.any(String),
+      receiver_username: expect.any(String),
+      body: expect.any(String),
+      created_at: expect.any(String),
+    }
+
+    return request(app)
+      .get("/api/users/eforgan9/messages")
+      .expect(200)
+      .then(({ body: { messages } }) => {
+        expect(messages.length).toBe(5);
+        expect(messages).toBeSortedBy('created_at', { descending: true });
+        messages.forEach(message => {
+          expect(message).toMatchObject(expectedMessage);
+        });
+      })
+  });
+
+  test("200: Responds with an empty array when a user has no messages", () => {
+    return request(app)
+    .get("/api/users/ktrevaskiss6/messages")
+    .expect(200)
+    .then(({ body: { messages }}) => {
+      expect(messages.length).toBe(0);
+      expect(messages).toEqual([]);
+    });
+  });
+});
+
+describe("GET /api/users/:username/study_groups", () => {
+  test("200: Responds with an array of study groups for the given username, sorted by most recent first", () => {
+
+    const expectedStudyGroup = {
+      group_id: expect.any(Number),
+      group_name: expect.any(String),
+      subject_id: expect.any(Number),
+      avatar_img_url: expect.any(String),
+      created_at: expect.any(String),
+      username: expect.any(String),
+      role: expect.any(String),
+    }
+
+    return request(app)
+      .get("/api/users/acranham7/study_groups")
+      .expect(200)
+      .then(({ body: { study_groups } }) => {
+        expect(study_groups.length).toBe(4);
+        expect(study_groups).toBeSortedBy('created_at', { descending: true });
+        study_groups.forEach(study_group => {
+          expect(study_group).toMatchObject(expectedStudyGroup);
+        });
+      })
+  });
+
+  test("200: Responds with an empty array when a user has no study groups", () => {
+    return request(app)
+    .get("/api/users/aclaricoats0/study_groups")
+    .expect(200)
+    .then(({ body: { study_groups }}) => {
+      expect(study_groups.length).toBe(0);
+      expect(study_groups).toEqual([]);
+    });
+  });
+});
