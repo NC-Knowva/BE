@@ -1,0 +1,66 @@
+{
+  "GET /api": {
+    "description": "Serves up a JSON representation of all available endpoints of the API"
+  },
+  "GET /api/users": {
+    "description": "Retrieves a list of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "exampleUser",
+          "email": "example@example.com",
+          "role": "student"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "Retrieves data for a specific user by username",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "username": "exampleUser",
+        "email": "example@example.com",
+        "role": "student"
+      }
+    }
+  },
+  "GET /api/users/:username/messages": {
+    "description": "Returns all messages sent by a specific user",
+    "queries": [],
+    "exampleResponse": {
+      "messages": [
+        {
+          "message_id": 1,
+          "body": "Hi there!",
+          "timestamp": "2025-04-23T10:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username/study-groups": {
+    "description": "Returns all study groups associated with a specific user",
+    "queries": [],
+    "exampleResponse": {
+      "study_groups": [
+        {
+          "group_id": 1,
+          "group_name": "Javascript Learners"
+        }
+      ]
+    }
+  },
+  "GET /api/subjects": {
+    "description": "Returns a list of all available subjects",
+    "queries": [],
+    "exampleResponse": {
+      "subjects": [
+        {
+          "subject_id": 1,
+          "subject_name": "Mathematics"
+        }
+      ]
+    }
+  }
+}
