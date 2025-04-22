@@ -581,15 +581,15 @@ describe("seed", () => {
                 });
         })
 
-        test('study_group table has group_name column as varchar', () => {
+        test('study_group table has study_group column as varchar', () => {
             return db.query(
                 `SELECT column_name, data_type
                     FROM information_schema.columns
                     WHERE table_name = 'study_group'
-                    AND column_name = 'group_name';`
+                    AND column_name = 'study_group';`
             )
                 .then(({ rows: [column] }) => {
-                    expect(column.column_name).toBe('group_name');
+                    expect(column.column_name).toBe('study_group');
                     expect(column.data_type).toBe('character varying');
                 });
         })
@@ -983,7 +983,7 @@ describe("seed", () => {
 
     })
 
-    describe('friends',()=>{
+    describe('friends', () => {
         test('friends table exists', () => {
             return db
                 .query(
@@ -1010,7 +1010,7 @@ describe("seed", () => {
                     expect(column.column_name).toBe('friend_id');
                     expect(column.data_type).toBe('integer');
                 });
-        }) 
+        })
 
         test('friends table has friend_id column as primary key', () => {
             return db
@@ -1025,7 +1025,7 @@ describe("seed", () => {
                 .then(({ rows: [{ column_name }] }) => {
                     expect(column_name).toBe('friend_id');
                 });
-        })     
+        })
 
         test('friends table has username column as varchar', () => {
             return db.query(
@@ -1038,9 +1038,9 @@ describe("seed", () => {
                     expect(column.column_name).toBe('username');
                     expect(column.data_type).toBe('character varying');
                 });
-        })       
-        
-        
+        })
+
+
         test('friends table has username friend as varchar', () => {
             return db.query(
                 `SELECT column_name, data_type
@@ -1052,7 +1052,7 @@ describe("seed", () => {
                     expect(column.column_name).toBe('friend');
                     expect(column.data_type).toBe('character varying');
                 });
-        })   
+        })
 
         test('friends table has created_at column as timestamp', () => {
             return db.query(
@@ -1108,118 +1108,118 @@ describe("seed", () => {
 
         test('message_activity data has been inserted correctly', () => {
             return db.query(`SELECT * FROM message_activity;`)
-            .then(({ rows: message_activity }) => {
-                expect(message_activity).toHaveLength(10);
-                message_activity.forEach((message) => {
-                expect(message).toHaveProperty('dm_id');
-                expect(message).toHaveProperty('sender_username');
-                expect(message).toHaveProperty('receiver_username');
-                expect(message).toHaveProperty('body');
-                expect(message).toHaveProperty('created_at');
+                .then(({ rows: message_activity }) => {
+                    expect(message_activity).toHaveLength(10);
+                    message_activity.forEach((message) => {
+                        expect(message).toHaveProperty('dm_id');
+                        expect(message).toHaveProperty('sender_username');
+                        expect(message).toHaveProperty('receiver_username');
+                        expect(message).toHaveProperty('body');
+                        expect(message).toHaveProperty('created_at');
+                    });
                 });
-            });
-            });
-    
+        });
+
         test('subjects data has been inserted correctly', () => {
             return db.query(`SELECT * FROM subjects;`)
-            .then(({ rows: subjects }) => {
-                expect(subjects).toHaveLength(5);
-                subjects.forEach((subject) => {
-                expect(subject).toHaveProperty('subject_id');
-                expect(subject).toHaveProperty('subject_name');
-                expect(subject).toHaveProperty('education_id');
+                .then(({ rows: subjects }) => {
+                    expect(subjects).toHaveLength(5);
+                    subjects.forEach((subject) => {
+                        expect(subject).toHaveProperty('subject_id');
+                        expect(subject).toHaveProperty('subject_name');
+                        expect(subject).toHaveProperty('education_id');
+                    });
                 });
-            });
-            });
-    
-             
+        });
+
+
         test('topics data has been inserted correctly', () => {
             return db.query(`SELECT * FROM topics;`)
-            .then(({ rows: topics }) => {
-                expect(topics).toHaveLength(6);
-                topics.forEach((topic) => {
-                expect(topic).toHaveProperty('topic_id');
-                expect(topic).toHaveProperty('topic_name');
-                expect(topic).toHaveProperty('education_id');
-                expect(topic).toHaveProperty('subject_id');
+                .then(({ rows: topics }) => {
+                    expect(topics).toHaveLength(6);
+                    topics.forEach((topic) => {
+                        expect(topic).toHaveProperty('topic_id');
+                        expect(topic).toHaveProperty('topic_name');
+                        expect(topic).toHaveProperty('education_id');
+                        expect(topic).toHaveProperty('subject_id');
+                    });
                 });
-            });
         });
 
         test('study_group data has been inserted correctly', () => {
             return db.query(`SELECT * FROM study_group;`)
-            .then(({ rows: study_group }) => {
-                expect(study_group).toHaveLength(5);
-                study_group.forEach((group) => {
-                expect(group).toHaveProperty('group_id');
-                expect(group).toHaveProperty('subject_id');
-                expect(group).toHaveProperty('group_name');
-                expect(group).toHaveProperty('avatar_img_url');
-                expect(group).toHaveProperty('created_at');
+                .then(({ rows: study_group }) => {
+                    expect(study_group).toHaveLength(5);
+                    study_group.forEach((group) => {
+                        expect(group).toHaveProperty('group_id');
+                        expect(group).toHaveProperty('subject_id');
+                        expect(group).toHaveProperty('study_group');
+                        expect(group).toHaveProperty('avatar_img_url');
+                        expect(group).toHaveProperty('created_at');
+                    });
                 });
-            });
         });
-    
+
 
         test('card_pack data has been inserted correctly', () => {
             return db.query(`SELECT * FROM card_pack;`)
-            .then(({ rows: card_pack }) => {
-                expect(card_pack).toHaveLength(5);
-                card_pack.forEach((pack) => {
-                expect(pack).toHaveProperty('pack_id');
-                expect(pack).toHaveProperty('username');
-                expect(pack).toHaveProperty('topic_id');
-                expect(pack).toHaveProperty('name');
-                expect(pack).toHaveProperty('description');
-                expect(pack).toHaveProperty('education_id');
-                expect(pack).toHaveProperty('visibility');
-                expect(pack).toHaveProperty('questions');
+                .then(({ rows: card_pack }) => {
+                    expect(card_pack).toHaveLength(5);
+                    card_pack.forEach((pack) => {
+                        expect(pack).toHaveProperty('pack_id');
+                        expect(pack).toHaveProperty('username');
+                        expect(pack).toHaveProperty('topic_id');
+                        expect(pack).toHaveProperty('name');
+                        expect(pack).toHaveProperty('description');
+                        expect(pack).toHaveProperty('education_id');
+                        expect(pack).toHaveProperty('visibility');
+                        expect(pack).toHaveProperty('questions');
+                    });
                 });
-            });
-        });        
+        });
 
         test('scoreboard data has been inserted correctly', () => {
             return db.query(`SELECT * FROM scoreboard;`)
-            .then(({ rows: scoreboard }) => {
-                expect(scoreboard).toHaveLength(9);
-                scoreboard.forEach((score) => {
-                expect(score).toHaveProperty('score_id');
-                expect(score).toHaveProperty('username');
-                expect(score).toHaveProperty('game_id');
-                expect(score).toHaveProperty('topic_id');
-                expect(score).toHaveProperty('subject_id');
-                expect(score).toHaveProperty('score');
-                expect(score).toHaveProperty('created_at');
+                .then(({ rows: scoreboard }) => {
+                    expect(scoreboard).toHaveLength(9);
+                    scoreboard.forEach((score) => {
+                        expect(score).toHaveProperty('score_id');
+                        expect(score).toHaveProperty('username');
+                        expect(score).toHaveProperty('game_id');
+                        expect(score).toHaveProperty('topic_id');
+                        expect(score).toHaveProperty('subject_id');
+                        expect(score).toHaveProperty('score');
+                        expect(score).toHaveProperty('created_at');
+                    });
                 });
-            });
-        });     
-        
+        });
+
 
         test('users_group_junction data has been inserted correctly', () => {
             return db.query(`SELECT * FROM users_group_junction;`)
-            .then(({ rows: users_group_junction }) => {
-                expect(users_group_junction).toHaveLength(31);
-                users_group_junction.forEach((users_group) => {
-                expect(users_group).toHaveProperty('users_group_id');
-                expect(users_group).toHaveProperty('role');
-                expect(users_group).toHaveProperty('username');
-                expect(users_group).toHaveProperty('group_id');
+                .then(({ rows: users_group_junction }) => {
+                    expect(users_group_junction).toHaveLength(31);
+                    users_group_junction.forEach((users_group) => {
+                        expect(users_group).toHaveProperty('users_group_id');
+                        expect(users_group).toHaveProperty('role');
+                        expect(users_group).toHaveProperty('username');
+                        expect(users_group).toHaveProperty('group_id');
+                    });
                 });
-            });
-        });        
-        
+        });
+
         test('friends data has been inserted correctly', () => {
             return db.query(`SELECT * FROM friends;`)
-            .then(({ rows: friends }) => {
-                expect(friends).toHaveLength(10);
-                friends.forEach((friend) => {
-                expect(friend).toHaveProperty('friend_id');
-                expect(friend).toHaveProperty('friend');
-                expect(friend).toHaveProperty('username');
-                expect(friend).toHaveProperty('created_at');
+                .then(({ rows: friends }) => {
+                    expect(friends).toHaveLength(10);
+                    friends.forEach((friend) => {
+                        expect(friend).toHaveProperty('friend_id');
+                        expect(friend).toHaveProperty('friend');
+                        expect(friend).toHaveProperty('username');
+                        expect(friend).toHaveProperty('created_at');
+                    });
                 });
-            });
-        });   
+        });
     });
 
 
