@@ -236,7 +236,7 @@ describe("GET /api/cards",()=>{
           description: expect.any(String),          
           education_id: expect.any(String),
           visibility: expect.any(Boolean),
-          questions: expect.any(JSON)
+          questions: expect.any(Object)
         })          
       });      
     })
