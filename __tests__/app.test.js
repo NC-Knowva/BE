@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../app");
 const seed = require("../db/seeds/seed");
-const data = require("../db/data/test-data");
+const data = require("../db/data/test-data/index.js");
 const db = require("../db/connection");
 
 beforeEach(() => seed(data));
@@ -26,7 +26,7 @@ describe("GET /api/users", () => {
       education_id: expect.any(String),
       settings: expect.any(Object),
       calendar: expect.any(Object),
-      time_stamp: expect.any(String),
+      created_at: expect.any(String),
     }
 
     return request(app)
@@ -50,7 +50,7 @@ describe("GET /api/users/:username", () => {
       education_id: "1",
       settings: expect.any(Object),
       calendar: expect.any(Object),
-      time_stamp: expect.any(String),
+      created_at: expect.any(String),
     }
 
     return request(app)
