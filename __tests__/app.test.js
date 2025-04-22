@@ -171,3 +171,24 @@ describe("GET /api/users/:username/study_groups", () => {
     });
   });
 });
+describe("GET /api/subjects",()=>{
+  //here
+test("200: Responds with an array of object with subject details.",()=>{
+  return request(app)
+  .get("/api/subjects")
+  .expect(200)
+  .then(({body})=>{
+    const subjects = body.subjects;
+    expect(subjects.length).toBe(5)
+
+    subjects.forEach((subject) => {
+      expect(subject).toMatchObject({
+        subject_id: expect.any(Number),
+        subject_name: expect.any(String),
+        education_id: expect.any(String)
+      })          
+    });
+  })
+})
+});
+
