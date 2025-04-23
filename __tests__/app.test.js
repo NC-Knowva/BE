@@ -261,3 +261,42 @@ describe("GET /api/study_groups",()=>{
       })
   })
 })
+
+
+describe("GET /api/study_groups/:study_group_id",()=>{
+  test("200: Responds with a single object with Study Group details for the study_group_id passed.",()=>{
+    return request(app)
+    .get("/api/study_groups/1")
+    .expect(200)
+    .then(({body})=>{
+      const study_group = body.group;
+      expect(study_group.group_id).toBe(1)
+      expect(study_group).toMatchObject({
+        group_id: expect.any(Number),
+        subject_id: expect.any(Number),
+        study_group: expect.any(String),
+        avatar_img_url: expect.any(String),
+        created_at: expect.any(String),
+      });
+    })
+  })
+
+  test("404: Responds with 'Resource Not Found' when given a valid study_group_id that is not in the database", () => {
+    return request(app)
+      .get("/api/study_groups/233")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Resource Not Found");
+      });
+  });
+
+  test("400: Responds with 'Bad request' when given a invalid study_group_id.", () => {
+    return request(app)
+      .get("/api/study_groups/abc")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request");
+      });
+  });
+
+})
