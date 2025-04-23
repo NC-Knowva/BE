@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 const { getGames } = require("./controllers/games.controller");
-const { getGroupById } = require("./controllers/study_groups.controller");
+const { getGroupById, getStudyGroups } = require("./controllers/study_groups.controller");
 const { getEndpoints } = require("./controllers/api.controller");
 
 const {
@@ -35,6 +35,8 @@ app.get("/api/users/:username", getUserByUsername);
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
 app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
+
+app.get("/api/study_groups", getStudyGroups);
 
 app.get("/api/study_groups/:study_group_id", getGroupById);
 

@@ -10,3 +10,8 @@ exports.selectGroupById = (id) => {
     return data[0];
   });
 };
+
+exports.selectStudyGroups = () => {
+  const queryStr = "SELECT * FROM study_group";
+  return db.query(queryStr).then(({ rows }) => rows);
+};
