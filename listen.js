@@ -20,13 +20,13 @@ io.on('connection', (socket) => {
     });
 
     socket.on('send_message', (messageData) => {
-        const { sender, recipient, content } = messageData
-        const recipientSocketId = users[recipient]
+        const { sender, receiver, body } = messageData
+        const receiverSocketId = users[receiver]
 
-        if (recipientSocketId) {
-            io.to(recipientSocketId).emit('receive_message', messageData)
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit('receive_message', messageData)
         } else {
-            console.log('Recipient not found:', recipient)
+            console.log('receiver not found:', receiver)
         }
     });
 
