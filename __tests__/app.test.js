@@ -348,8 +348,52 @@ describe("POST /api/users",()=>{
       .send(postReq)
       .expect(400)
       .then(({ body }) => {
-        console.log(body)
         expect(body.msg).toBe("Foreign key violation");
       });
   });
+})
+
+
+describe("POST /api/topics",()=>{
+  test("201: Responds with a single object with New Topic details inserted in the database.",()=>{
+    const postReq = {
+      topic_name:"testtopic", 
+      education_id: "one",
+      subject_id: 1
+    }
+    return request(app)
+    .post("/api/topics")
+    .send(postReq)
+    .expect(201)
+    .then(({body})=>{
+      const topic = body.topic
+      expect(topic.topic_id).toBe(7)
+      expect(topic.topic_name).toBe("testtopic")
+      expect(topic.education_id).toBe("one")
+      expect(topic.subject_id).toBe(1)
+
+      expect(topic).toMatchObject({
+         topic_name: expect.any(String),
+         education_id: expect.any(String),
+         subject_id: expect.any(Number)
+      });           
+
+    })
+  })
+
+  test("400: Responds with 'Bad request' when given an invalid post topics request.",()=>{
+    const postReq = {
+      topic_name:"testtopic", 
+      education_id: "home",
+      subject_id: 1
+    }
+    return request(app)
+    .post("/api/topics")
+    .send(postReq)
+    .expect(400)
+    .then(({body})=>{
+       expect(body.msg).toBe("Foreign key violation");
+    })
+
+  })
 })
