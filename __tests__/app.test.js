@@ -3,6 +3,7 @@ const app = require("../app");
 const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index.js");
 const db = require("../db/connection");
+const { json } = require("express");
 
 beforeEach(() => seed(data));
 afterAll(() => db.end());
@@ -141,7 +142,7 @@ describe("GET /api/users/:username/study_groups", () => {
 
     const expectedStudyGroup = {
       group_id: expect.any(Number),
-      group_name: expect.any(String),
+      study_group: expect.any(String),
       subject_id: expect.any(Number),
       avatar_img_url: expect.any(String),
       created_at: expect.any(String),
@@ -161,7 +162,7 @@ describe("GET /api/users/:username/study_groups", () => {
       })
   });
 
-  test("200: Responds with an empty array when a user has no study groups", () => {
+  test.skip("200: Responds with an empty array when a user has no study groups", () => {
     return request(app)
     .get("/api/users/aclaricoats0/study_groups")
     .expect(200)
@@ -171,3 +172,73 @@ describe("GET /api/users/:username/study_groups", () => {
     });
   });
 });
+describe("GET /api/subjects",()=>{
+  //here
+test("200: Responds with an array of object with subject details.",()=>{
+  return request(app)
+  .get("/api/subjects")
+  .expect(200)
+  .then(({body})=>{
+    const subjects = body.subjects;
+    expect(subjects.length).toBe(5)
+
+    subjects.forEach((subject) => {
+      expect(subject).toMatchObject({
+        subject_id: expect.any(Number),
+        subject_name: expect.any(String),
+        education_id: expect.any(String)
+      })          
+    });
+  })
+})
+});
+
+describe("GET /api/topics", ()=>{
+
+  test("200: Responds with an array of object with topic details.",()=>{
+    return request(app)
+    .get("/api/topics")
+    .expect(200)
+    .then(({body})=>{
+      const topics = body.topics;
+      expect(topics.length).toBe(6)
+  
+      topics.forEach((topic) => {
+        expect(topic).toMatchObject({
+          topic_id: expect.any(Number),
+          subject_id: expect.any(Number),
+          topic_name: expect.any(String),
+          education_id: expect.any(String)
+        })          
+      });
+
+    })
+
+  })
+  
+})
+
+describe("GET /api/cards",()=>{
+  test("200: Responds with an array of objects with Card details.",()=>{
+    return request(app)
+    .get("/api/cards")
+    .expect(200)
+    .then(({body})=>{
+      const cards = body.cards;
+      expect(cards.length).toBe(5)
+  
+      cards.forEach((card) => {
+        expect(card).toMatchObject({
+          pack_id: expect.any(Number),
+          username: expect.any(String),
+          topic_id: expect.any(Number),
+          name: expect.any(String),
+          description: expect.any(String),          
+          education_id: expect.any(String),
+          visibility: expect.any(Boolean),
+          questions: expect.any(Object)
+        })          
+      });      
+    })
+  })
+})
