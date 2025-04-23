@@ -2,24 +2,35 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
+const { getEndpoints } = require("./controllers/api.controller");
+
 const { getGames } = require("./controllers/games.controller");
 
-
-const { getUsers, getUserByUsername, getMessagesByUsername, getStudyGroupsByUsername } = require("./controllers/users.controller");
-const { invalidPathController, psqlErrorHandler, customErrorHandler, serverErrorHandler } = require("./controllers/errors.controller");
+const {
+  getUsers,
+  getUserByUsername,
+  getMessagesByUsername,
+  getStudyGroupsByUsername,
+} = require("./controllers/users.controller");
+const {
+  invalidPathController,
+  psqlErrorHandler,
+  customErrorHandler,
+  serverErrorHandler,
+} = require("./controllers/errors.controller");
 const { getSubjects } = require("./controllers/subjects.controller");
 const { getTopics } = require("./controllers/topics.controller");
 const { getCards } = require("./controllers/cards.controller");
-
 
 app.use(cors());
 
 app.use(express.json());
 
+app.get("/api", getEndpoints);
+
 app.get("/api/users", getUsers);
 
 app.get("/api/users/:username", getUserByUsername);
-
 
 app.get("/api/games", getGames);
 
@@ -42,4 +53,3 @@ app.use(customErrorHandler);
 app.use(serverErrorHandler);
 
 module.exports = app;
-
