@@ -1,5 +1,5 @@
 const endpoints = require("../endpoints.json");
 
-module.getEndpoints = (request, response) => {
-  response.status(200).send({ endpoints: endpoints });
-};
+exports.getEndpoints = (req,res,next) => {
+    res.status(200).send({endpoints})
+}
