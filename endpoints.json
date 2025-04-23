@@ -1,66 +1,249 @@
 {
   "GET /api": {
-    "description": "Serves up a JSON representation of all available endpoints of the API"
+    "description": "Serves a JSON representation of all available API endpoints"
   },
-  "GET /api/users": {
-    "description": "Retrieves a list of all users",
-    "queries": [],
-    "exampleResponse": {
-      "users": [
-        {
-          "username": "exampleUser",
-          "email": "example@example.com",
-          "role": "student"
-        }
-      ]
-    }
-  },
-  "GET /api/users/:username": {
-    "description": "Retrieves data for a specific user by username",
-    "queries": [],
-    "exampleResponse": {
-      "user": {
-        "username": "exampleUser",
-        "email": "example@example.com",
-        "role": "student"
-      }
-    }
-  },
-  "GET /api/users/:username/messages": {
-    "description": "Returns all messages sent by a specific user",
-    "queries": [],
-    "exampleResponse": {
-      "messages": [
-        {
-          "message_id": 1,
-          "body": "Hi there!",
-          "timestamp": "2025-04-23T10:00:00.000Z"
-        }
-      ]
-    }
-  },
-  "GET /api/users/:username/study-groups": {
-    "description": "Returns all study groups associated with a specific user",
+  "GET /api/users/:username/study_groups": {
+    "description": "Serves an array of study groups for the specified user",
     "queries": [],
     "exampleResponse": {
       "study_groups": [
         {
           "group_id": 1,
-          "group_name": "Javascript Learners"
+          "study_group": "Math Study Group",
+          "subject_id": 2,
+          "avatar_img_url": "https://example.com/math.jpg",
+          "created_at": "2023-01-15T09:30:00.000Z"
         }
       ]
     }
   },
-  "GET /api/subjects": {
-    "description": "Returns a list of all available subjects",
+  "GET /api/users/:username/messages": {
+    "description": "Serves an array of messages for the specified user",
     "queries": [],
     "exampleResponse": {
-      "subjects": [
+      "messages": [
         {
-          "subject_id": 1,
-          "subject_name": "Mathematics"
+          "dm_id": 1,
+          "sender_username": "math_lover",
+          "receiver_username": "science_fan",
+          "body": "Let's study together!",
+          "created_at": "2023-01-15T10:00:00.000Z"
         }
       ]
     }
+  },
+  "GET /api/users": {
+    "description": "Serves an array of all users",
+    "queries": [],
+    "exampleResponse": {
+      "users": [
+        {
+          "username": "math_lover",
+          "name": "Alice Smith",
+          "avatar_img_url": "https://example.com/avatar1.jpg",
+          "education_id": "high_school",
+          "settings": {"theme": "dark"},
+          "calendar": {"events": []},
+          "created_at": "2023-01-01T00:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "GET /api/users/:username": {
+    "description": "Serves a user object for the specified username",
+    "queries": [],
+    "exampleResponse": {
+      "user": {
+        "username": "math_lover",
+        "name": "Alice Smith",
+        "avatar_img_url": "https://example.com/avatar1.jpg",
+        "education_id": "high_school",
+        "settings": {"theme": "dark"},
+        "calendar": {"events": []},
+        "created_at": "2023-01-01T00:00:00.000Z"
+      }
+    }
+  },
+  "GET /api/study_groups": {
+    "description": "Serves an array of all study groups",
+    "queries": ["topic", "filter_by"],
+    "exampleResponse": {
+      "study_groups": [
+        {
+          "group_id": 1,
+          "study_group": "Math Study Group",
+          "subject_id": 2,
+          "avatar_img_url": "https://example.com/math.jpg",
+          "created_at": "2023-01-15T09:30:00.000Z"
+        }
+      ]
+    }
+  },
+  "GET /api/study_groups/:study_group_id": {
+    "description": "Serves a study group object with the specified ID",
+    "queries": [],
+    "exampleResponse": {
+      "study_group": {
+        "group_id": 1,
+        "study_group": "Math Study Group",
+        "subject_id": 2,
+        "avatar_img_url": "https://example.com/math.jpg",
+        "created_at": "2023-01-15T09:30:00.000Z"
+      }
+    }
+  },
+  "GET /api/games": {
+    "description": "Serves an array of all games",
+    "queries": [],
+    "exampleResponse": {
+      "games": [
+        {
+          "game_id": 1,
+          "game_name": "Math Quiz",
+          "game_type": "quiz",
+          "subject_name": "Mathematics",
+          "username": "math_lover",
+          "topic_name": "Algebra",
+          "auto_generated_code": "MATH123",
+          "created_at": "2023-01-15T10:00:00.000Z"
+        }
+      ]
+    }
+  },
+  "GET /api/education": {
+    "description": "Serves education levels filtered by criteria",
+    "queries": ["filter_by"],
+    "exampleResponse": {
+      "education_levels": [
+        {"education": "high_school"},
+        {"education": "undergraduate"}
+      ]
+    }
+  },
+  "GET /api/:username/calendars": {
+    "description": "Serves calendar data for the specified user",
+    "queries": [],
+    "exampleResponse": {
+      "calendar": {
+        "events": [
+          {
+            "title": "Study Session",
+            "start": "2023-01-16T14:00:00.000Z",
+            "end": "2023-01-16T16:00:00.000Z"
+          }
+        ]
+      }
+    }
+  },
+  "POST /api/users": {
+    "description": "Creates a new user",
+    "requestBody": {
+      "username": "new_user",
+      "name": "New User",
+      "avatar_img_url": "https://example.com/new.jpg",
+      "education_id": "high_school"
+    },
+    "exampleResponse": {
+      "user": {
+        "username": "new_user",
+        "name": "New User",
+        "avatar_img_url": "https://example.com/new.jpg",
+        "education_id": "high_school",
+        "created_at": "2023-01-15T12:00:00.000Z"
+      }
+    }
+  },
+  "POST /api/subjects/:subject_id": {
+    "description": "Adds a new subject",
+    "requestBody": {
+      "subject_name": "Physics",
+      "education_id": "high_school"
+    },
+    "exampleResponse": {
+      "subject": {
+        "subject_id": 3,
+        "subject_name": "Physics",
+        "education_id": "high_school"
+      }
+    }
+  },
+  "POST /api/topics": {
+    "description": "Creates a new topic",
+    "requestBody": {
+      "topic_name": "Quantum Mechanics",
+      "education_id": "undergraduate",
+      "subject_id": 3
+    },
+    "exampleResponse": {
+      "topic": {
+        "topic_id": 5,
+        "topic_name": "Quantum Mechanics",
+        "education_id": "undergraduate",
+        "subject_id": 3
+      }
+    }
+  },
+  "PATCH /api/users/:username": {
+    "description": "Updates user details",
+    "requestBody": {
+      "name": "Updated Name",
+      "avatar_img_url": "https://example.com/updated.jpg"
+    },
+    "exampleResponse": {
+      "user": {
+        "username": "math_lover",
+        "name": "Updated Name",
+        "avatar_img_url": "https://example.com/updated.jpg"
+      }
+    }
+  },
+  "PATCH /api/users/:username/settings": {
+    "description": "Updates user settings",
+    "requestBody": {
+      "settings": {"theme": "light", "notifications": true}
+    },
+    "exampleResponse": {
+      "settings": {"theme": "light", "notifications": true}
+    }
+  },
+  "PATCH /api/subjects/:subject_id": {
+    "description": "Updates subject details",
+    "requestBody": {
+      "subject_name": "Advanced Mathematics"
+    },
+    "exampleResponse": {
+      "subject": {
+        "subject_id": 2,
+        "subject_name": "Advanced Mathematics"
+      }
+    }
+  },
+  "PATCH /api/topics/:topic_id": {
+    "description": "Updates topic details",
+    "requestBody": {
+      "topic_name": "Basic Algebra"
+    },
+    "exampleResponse": {
+      "topic": {
+        "topic_id": 1,
+        "topic_name": "Basic Algebra"
+      }
+    }
+  },
+  "DELETE /api/users/:username": {
+    "description": "Deletes the specified user",
+    "response": {"204": "No Content"}
+  },
+  "DELETE /api/subjects/:subject_id": {
+    "description": "Deletes the specified subject",
+    "response": {"204": "No Content"}
+  },
+  "DELETE /api/topics/:topic_id": {
+    "description": "Deletes the specified topic",
+    "response": {"204": "No Content"}
   }
 }
+
+
+
+
