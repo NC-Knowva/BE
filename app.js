@@ -11,6 +11,7 @@ const {
   getUserByUsername,
   getMessagesByUsername,
   getStudyGroupsByUsername,
+  postUser,
 } = require("./controllers/users.controller");
 const {
   invalidPathController,
@@ -29,6 +30,8 @@ app.use(express.json());
 app.get("/api", getEndpoints);
 
 app.get("/api/users", getUsers);
+
+app.post("/api/users", postUser);
 
 app.get("/api/users/:username", getUserByUsername);
 

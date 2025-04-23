@@ -60,3 +60,13 @@ exports.selectStudyGroupsByUsername = (username) => {
     });
 };
 
+exports.insertUser = (username, name, avatar_img_url, education_id) => {
+  const queryStr = `
+    INSERT INTO users (username, name, avatar_img_url, education_id)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *;
+  `;
+
+  return db.query(queryStr, [username, name, avatar_img_url, education_id])
+  .then(({ rows }) => rows[0]);
+};

@@ -61,7 +61,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             education_id VARCHAR(50) REFERENCES education_level(education),
             settings JSON,
             calendar JSON,
-            created_at TIMESTAMP
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );`)
 
         })
