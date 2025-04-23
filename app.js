@@ -19,7 +19,7 @@ const {
   customErrorHandler,
   serverErrorHandler,
 } = require("./controllers/errors.controller");
-const { getSubjects, getSubjectById } = require("./controllers/subjects.controller");
+const { getSubjects, getSubjectById, postSubject } = require("./controllers/subjects.controller");
 const { getTopics, postTopic } = require("./controllers/topics.controller");
 const { getCards, getCardByName } = require("./controllers/cards.controller");
 const { getScoreboard } = require("./controllers/scoreboard.controller");
@@ -47,6 +47,8 @@ app.get("/api/study_groups/:study_group_id", getGroupById);
 app.get("/api/subjects", getSubjects);
 
 app.get("/api/subjects/:subject_id", getSubjectById)
+
+app.post("/api/subjects/:subject_id", postSubject)
 
 app.get("/api/games", getGames);
 
