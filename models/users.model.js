@@ -70,3 +70,17 @@ exports.insertUser = (username, name, avatar_img_url, education_id) => {
   return db.query(queryStr, [username, name, avatar_img_url, education_id])
   .then(({ rows }) => rows[0]);
 };
+
+exports.updateUser = (username, name, avatar_img_url, education_id) => {
+  const queryStr = `
+      UPDATE users
+      SET name = $1,
+          avatar_img_url =$2,
+          education_id = $3
+      WHERE username = $4
+      RETURNING *`;
+  
+  return checkExists("users", "username", username)
+  .then(() => db.query(queryStr, [name, avatar_img_url, education_id, username]))
+  .then(({ rows }) => rows[0]);
+};
