@@ -3,12 +3,20 @@ const express = require("express");
 const app = express();
 
 const { getGames } = require("./controllers/games.controller");
-
-
-const { getUsers, getUserByUsername, getMessagesByUsername, getStudyGroupsByUsername } = require("./controllers/users.controller");
-const { invalidPathController, psqlErrorHandler, customErrorHandler, serverErrorHandler } = require("./controllers/errors.controller");
+const { getGroupById } = require("./controllers/study_groups.controller");
+const {
+  getUsers,
+  getUserByUsername,
+  getMessagesByUsername,
+  getStudyGroupsByUsername,
+} = require("./controllers/users.controller");
+const {
+  invalidPathController,
+  psqlErrorHandler,
+  customErrorHandler,
+  serverErrorHandler,
+} = require("./controllers/errors.controller");
 const { getSubjects } = require("./controllers/subjects.controller");
-
 
 app.use(cors());
 
@@ -18,15 +26,15 @@ app.get("/api/users", getUsers);
 
 app.get("/api/users/:username", getUserByUsername);
 
-
-app.get("/api/games", getGames);
-
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
 app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
 
+app.get("/api/study_groups/:study_group_id", getGroupById);
+
 app.get("/api/subjects", getSubjects);
 
+app.get("/api/games", getGames);
 
 app.use(invalidPathController);
 
@@ -37,4 +45,3 @@ app.use(customErrorHandler);
 app.use(serverErrorHandler);
 
 module.exports = app;
-
