@@ -238,3 +238,26 @@ describe("GET /api/cards", () => {
       });
   });
 });
+
+
+describe("GET /api/study_groups",()=>{
+  test("200: Responds with an array of objects with Study Group details.",()=>{
+    return request(app)
+    .get("/api/study_groups")
+    .expect(200)
+    .then(({body})=>{
+      const study_groups = body.study_groups;
+      expect(study_groups.length).toBe(5);
+
+      study_groups.forEach((study_group) => {
+        expect(study_group).toMatchObject({
+          group_id: expect.any(Number),
+          subject_id: expect.any(Number),
+          study_group: expect.any(String),
+          avatar_img_url: expect.any(String),
+          created_at: expect.any(String),
+        });
+      })
+      })
+  })
+})
