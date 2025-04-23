@@ -20,7 +20,7 @@ const {
   serverErrorHandler,
 } = require("./controllers/errors.controller");
 const { getSubjects } = require("./controllers/subjects.controller");
-const { getTopics } = require("./controllers/topics.controller");
+const { getTopics, postTopic } = require("./controllers/topics.controller");
 const { getCards } = require("./controllers/cards.controller");
 
 app.use(cors());
@@ -48,6 +48,8 @@ app.get("/api/subjects", getSubjects);
 app.get("/api/games", getGames);
 
 app.get("/api/topics", getTopics);
+
+app.post("/api/topics", postTopic);
 
 app.get("/api/cards", getCards);
 
