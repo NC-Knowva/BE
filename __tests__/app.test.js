@@ -421,3 +421,37 @@ describe("GET /api/scoreboard",()=>{
     })
   })
 })
+
+describe("GET /api/cards/:name",()=>{
+  test("200: Responds with a single object with Card details.",()=>{
+    return request(app)
+    .get(`/api/cards/Topic 1 Card Pack`)
+    .expect(200)
+    .then(({body})=>{
+      const card = body.card;
+      expect(card.name).toBe("Topic 1 Card Pack")
+      expect(card.pack_id).toBe(1)
+      expect(card).toMatchObject({
+        pack_id: expect.any(Number),
+        username: expect.any(String),
+        topic_id: expect.any(Number),
+        name: expect.any(String),
+        description: expect.any(String),
+        education_id: expect.any(String),
+        questions: expect.any(Object),
+        visibility: expect.any(Boolean)
+      });  
+
+    })
+  })
+
+  test("404: Responds with 'Resource Not Found' when given a valid Card Name that is not in the database",()=>{
+    return request(app)
+    .get("/api/cards/Test Pack")
+    .expect(404)
+    .then(({ body }) => {
+      expect(body.msg).toBe("Resource Not Found");
+    });
+  })
+  
+})
