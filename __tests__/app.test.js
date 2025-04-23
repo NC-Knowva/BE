@@ -300,3 +300,56 @@ describe("GET /api/study_groups/:study_group_id",()=>{
   });
 
 })
+
+describe("POST /api/users",()=>{
+  test("201: Responds with a single object with New User details inserted in the database.",()=>{
+    //username, name, avatar_img_url, education_id
+    const postReq = {
+      username:"test", 
+      name: "testname",
+      avatar_img_url: "https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg",
+      education_id: "one"
+    }
+    return request(app)
+    .post("/api/users")
+    .send(postReq)
+    .expect(201)
+    .then(({body})=>{
+
+      const user = body.user;
+      expect(user.username).toBe("test")
+      expect(user.name).toBe("testname")
+      expect(user.avatar_img_url).toBe("https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg")
+      expect(user.education_id).toBe("one")
+
+      expect(user).toMatchObject({
+        username: expect.any(String),
+         name: expect.any(String),
+         avatar_img_url: expect.any(String),
+         education_id: expect.any(String),
+         settings: expect.any(Object),
+         calendar: expect.any(Object),
+         created_at: expect.any(String)
+      });
+           
+    })
+  })
+
+  test("400: Responds with 'Bad request' when given a invalid post users request.", () => {
+    const postReq = {    
+      username: "test", 
+      name: "testname",
+      avatar_img_url: "https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg",
+      education_id: "school" 
+   }
+
+    return request(app)
+      .post("/api/users")
+      .send(postReq)
+      .expect(400)
+      .then(({ body }) => {
+        console.log(body)
+        expect(body.msg).toBe("Foreign key violation");
+      });
+  });
+})
