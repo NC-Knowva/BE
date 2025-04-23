@@ -1,4 +1,4 @@
-const { selectTopics, insertTopic } = require("../models/topics.model");
+const { selectTopics, insertTopic, selectTopicById } = require("../models/topics.model");
 
 exports.getTopics = (req, res, next) => {
     selectTopics()
@@ -11,5 +11,14 @@ exports.postTopic = (req, res, next) => {
 
     insertTopic(topic_name, education_id, subject_id)
     .then(topic => res.status(201).send({ topic }))
+    .catch(err => next(err));
+};
+
+exports.getTopicById = (req, res, next) => {
+    const { topic_id } = req.params;
+    selectTopicById(topic_id)
+    .then(({ rows }) => {
+        res.status(200).send({ topic: rows[0] });
+      })
     .catch(err => next(err));
 };

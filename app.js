@@ -20,7 +20,7 @@ const {
   serverErrorHandler,
 } = require("./controllers/errors.controller");
 const { getSubjects, getSubjectById, postSubject } = require("./controllers/subjects.controller");
-const { getTopics, postTopic } = require("./controllers/topics.controller");
+const { getTopics, postTopic, getTopicById } = require("./controllers/topics.controller");
 const { getCards, getCardByName } = require("./controllers/cards.controller");
 const { getScoreboard } = require("./controllers/scoreboard.controller");
 
@@ -53,6 +53,8 @@ app.post("/api/subjects/:subject_id", postSubject)
 app.get("/api/games", getGames);
 
 app.get("/api/topics", getTopics);
+
+app.get("/api/topics/:topic_id", getTopicById);
 
 app.post("/api/topics", postTopic);
 
