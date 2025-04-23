@@ -22,6 +22,7 @@ const {
 const { getSubjects } = require("./controllers/subjects.controller");
 const { getTopics, postTopic } = require("./controllers/topics.controller");
 const { getCards } = require("./controllers/cards.controller");
+const { getScoreboard } = require("./controllers/scoreboard.controller");
 
 app.use(cors());
 
@@ -52,6 +53,8 @@ app.get("/api/topics", getTopics);
 app.post("/api/topics", postTopic);
 
 app.get("/api/cards", getCards);
+
+app.get("/api/scoreboard", getScoreboard);
 
 app.use(invalidPathController);
 
