@@ -397,3 +397,27 @@ describe("POST /api/topics",()=>{
 
   })
 })
+
+describe("GET /api/scoreboard",()=>{
+  test("200: Responds with an array objects with Scoreboard details.",()=>{
+    return request(app)
+    .get("/api/scoreboard")
+    .expect(200)
+    .then(({body})=>{
+      const scoreboards = body.scoreboard
+      expect(scoreboards.length).toBe(9);
+      scoreboards.forEach((scoreboard) => {
+        expect(scoreboard).toMatchObject({
+          score_id: expect.any(Number),
+          username: expect.any(String),
+          game_id: expect.any(Number),
+          topic_id: expect.any(Number),
+          subject_id: expect.any(Number),
+          score: expect.any(Object),
+          created_at: expect.any(String),
+        });
+      });  
+
+    })
+  })
+})
