@@ -2,9 +2,9 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
-const { getEndpoints } = require("./controllers/api.controller");
-
 const { getGames } = require("./controllers/games.controller");
+const { getGroupById } = require("./controllers/study_groups.controller");
+const { getEndpoints } = require("./controllers/api.controller");
 
 const {
   getUsers,
@@ -32,13 +32,15 @@ app.get("/api/users", getUsers);
 
 app.get("/api/users/:username", getUserByUsername);
 
-app.get("/api/games", getGames);
-
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
 app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
 
+app.get("/api/study_groups/:study_group_id", getGroupById);
+
 app.get("/api/subjects", getSubjects);
+
+app.get("/api/games", getGames);
 
 app.get("/api/topics", getTopics);
 
