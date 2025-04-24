@@ -4,6 +4,7 @@ const seed = require("../db/seeds/seed");
 const data = require("../db/data/test-data/index.js");
 const db = require("../db/connection");
 const { json } = require("express");
+const { string } = require("pg-format");
 
 beforeEach(() => seed(data));
 afterAll(() => db.end());
@@ -485,4 +486,49 @@ describe("GET /api/topics/:topicid",()=>{
         expect(body.msg).toBe("Bad request");
       });
   });
+})
+
+describe("PATCH /users/:username",()=>{
+  test("200: Responds with a single object with New User details updated in the database.",()=>{
+    const patchReq = {
+      name: "testpatch", 
+      avatar_img_url: "https://robohash.org/Y6A.png?set=set4", 
+      education_id: "two"}
+    return request(app)
+    .patch("/api/users/ogladyer1")
+    .send(patchReq)
+    .expect(200)
+    .then(({body})=>{
+      const user = body.user;
+      expect(user.username).toBe("ogladyer1");
+      expect(user.name).toBe("testpatch");
+      expect(user.education_id).toBe("two");
+      expect(user.avatar_img_url).toBe("https://robohash.org/Y6A.png?set=set4");
+
+      expect(user).toMatchObject({
+        username: expect.any(String),
+        name: expect.any(String),
+        education_id: expect.any(String),
+        avatar_img_url: expect.any(String),
+        settings: expect.any(Object),
+        calendar: expect.any(Object),
+        created_at: expect.any(String)
+      });
+    })
+  })
+
+  test("400: Responds with 'Bad request' when given an invalid patch users request for a username.",()=>{
+    const patchReq = {
+      name: "testpatch", 
+      avatar_img_url: "https://robohash.org/Y6A.png?set=set4", 
+      education_id: "home"};
+
+    return request(app)
+    .patch("/api/users/ogladyer1")
+    .send(patchReq)
+    .expect(400)
+    .then(({ body }) => {
+      expect(body.msg).toBe("Foreign key violation");
+    });
+  })
 })
