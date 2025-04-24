@@ -31,10 +31,12 @@
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
+    "http": "^0.0.1-security",
     "jest-sorted": "^1.0.15",
     "pg": "^8.14.1",
     "pg-format": "^1.0.4",
     "prettier": "^3.5.3",
+    "socket.io": "^4.8.1",
     "supertest": "^7.1.0"
   },
   "jest": {

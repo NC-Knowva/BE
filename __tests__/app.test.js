@@ -239,3 +239,212 @@ describe("GET /api/cards", () => {
   });
 });
 
+describe("GET /api/study_groups", () => {
+  test("200: Responds with an array of objects with Study Group details.", () => {
+    return request(app)
+      .get("/api/study_groups")
+      .expect(200)
+      .then(({ body }) => {
+        const study_groups = body.study_groups;
+        expect(study_groups.length).toBe(5);
+
+        study_groups.forEach((study_group) => {
+          expect(study_group).toMatchObject({
+            group_id: expect.any(Number),
+            subject_id: expect.any(Number),
+            study_group: expect.any(String),
+            avatar_img_url: expect.any(String),
+            created_at: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET /api/study_groups/:study_group_id", () => {
+  test("200: Responds with a single object with Study Group details for the study_group_id passed.", () => {
+    return request(app)
+      .get("/api/study_groups/1")
+      .expect(200)
+      .then(({ body }) => {
+        const study_group = body.group;
+        expect(study_group.group_id).toBe(1);
+        expect(study_group).toMatchObject({
+          group_id: expect.any(Number),
+          subject_id: expect.any(Number),
+          study_group: expect.any(String),
+          avatar_img_url: expect.any(String),
+          created_at: expect.any(String),
+        });
+      });
+  });
+
+  test("404: Responds with 'Resource Not Found' when given a valid study_group_id that is not in the database", () => {
+    return request(app)
+      .get("/api/study_groups/233")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Resource Not Found");
+      });
+  });
+
+  test("400: Responds with 'Bad request' when given a invalid study_group_id.", () => {
+    return request(app)
+      .get("/api/study_groups/abc")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request");
+      });
+  });
+});
+
+describe("POST /api/users", () => {
+  test("201: Responds with a single object with New User details inserted in the database.", () => {
+    //username, name, avatar_img_url, education_id
+    const postReq = {
+      username: "test",
+      name: "testname",
+      avatar_img_url:
+        "https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg",
+      education_id: "one",
+    };
+    return request(app)
+      .post("/api/users")
+      .send(postReq)
+      .expect(201)
+      .then(({ body }) => {
+        const user = body.user;
+        expect(user.username).toBe("test");
+        expect(user.name).toBe("testname");
+        expect(user.avatar_img_url).toBe(
+          "https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg",
+        );
+        expect(user.education_id).toBe("one");
+
+        expect(user).toMatchObject({
+          username: expect.any(String),
+          name: expect.any(String),
+          avatar_img_url: expect.any(String),
+          education_id: expect.any(String),
+          settings: expect.any(Object),
+          calendar: expect.any(Object),
+          created_at: expect.any(String),
+        });
+      });
+  });
+
+  test("400: Responds with 'Bad request' when given a invalid post users request.", () => {
+    const postReq = {
+      username: "test",
+      name: "testname",
+      avatar_img_url:
+        "https://w0.peakpx.com/wallpaper/301/187/HD-wallpaper-cat-cute.jpg",
+      education_id: "school",
+    };
+
+    return request(app)
+      .post("/api/users")
+      .send(postReq)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Foreign key violation");
+      });
+  });
+});
+
+describe("POST /api/topics", () => {
+  test("201: Responds with a single object with New Topic details inserted in the database.", () => {
+    const postReq = {
+      topic_name: "testtopic",
+      education_id: "one",
+      subject_id: 1,
+    };
+    return request(app)
+      .post("/api/topics")
+      .send(postReq)
+      .expect(201)
+      .then(({ body }) => {
+        const topic = body.topic;
+        expect(topic.topic_id).toBe(7);
+        expect(topic.topic_name).toBe("testtopic");
+        expect(topic.education_id).toBe("one");
+        expect(topic.subject_id).toBe(1);
+
+        expect(topic).toMatchObject({
+          topic_name: expect.any(String),
+          education_id: expect.any(String),
+          subject_id: expect.any(Number),
+        });
+      });
+  });
+
+  test("400: Responds with 'Bad request' when given an invalid post topics request.", () => {
+    const postReq = {
+      topic_name: "testtopic",
+      education_id: "home",
+      subject_id: 1,
+    };
+    return request(app)
+      .post("/api/topics")
+      .send(postReq)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Foreign key violation");
+      });
+  });
+});
+
+describe("GET /api/scoreboard", () => {
+  test("200: Responds with an array objects with Scoreboard details.", () => {
+    return request(app)
+      .get("/api/scoreboard")
+      .expect(200)
+      .then(({ body }) => {
+        const scoreboards = body.scoreboard;
+        expect(scoreboards.length).toBe(9);
+        scoreboards.forEach((scoreboard) => {
+          expect(scoreboard).toMatchObject({
+            score_id: expect.any(Number),
+            username: expect.any(String),
+            game_id: expect.any(Number),
+            topic_id: expect.any(Number),
+            subject_id: expect.any(Number),
+            score: expect.any(Object),
+            created_at: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET /api/cards/:name", () => {
+  test("200: Responds with a single object with Card details.", () => {
+    return request(app)
+      .get(`/api/cards/Topic 1 Card Pack`)
+      .expect(200)
+      .then(({ body }) => {
+        const card = body.card;
+        expect(card.name).toBe("Topic 1 Card Pack");
+        expect(card.pack_id).toBe(1);
+        expect(card).toMatchObject({
+          pack_id: expect.any(Number),
+          username: expect.any(String),
+          topic_id: expect.any(Number),
+          name: expect.any(String),
+          description: expect.any(String),
+          education_id: expect.any(String),
+          questions: expect.any(Object),
+          visibility: expect.any(Boolean),
+        });
+      });
+  });
+
+  test("404: Responds with 'Resource Not Found' when given a valid Card Name that is not in the database", () => {
+    return request(app)
+      .get("/api/cards/Test Pack")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Resource Not Found");
+      });
+  });
+});
