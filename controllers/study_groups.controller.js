@@ -10,7 +10,8 @@ exports.getGroupById = (req, res, next) => {
 };
 
 exports.getStudyGroups = (req, res, next) => {
-    selectStudyGroups()
+  const {subject}= req.query
+    selectStudyGroups(subject)
     .then(study_groups => res.status(200).send({ study_groups }))
     .catch(err => next(err));
 };
