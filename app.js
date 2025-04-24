@@ -13,6 +13,8 @@ const {
   getStudyGroupsByUsername,
   postUser,
   patchUserByUsername,
+  getUserFriends,
+  
 } = require("./controllers/users.controller");
 const {
   invalidPathController,
@@ -42,6 +44,8 @@ app.patch("/api/users/:username", patchUserByUsername);
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
 app.get("/api/users/:username/study_groups", getStudyGroupsByUsername);
+
+app.get("/api/users/:username/friends", getUserFriends)
 
 app.get("/api/study_groups", getStudyGroups);
 
