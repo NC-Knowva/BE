@@ -448,3 +448,41 @@ describe("GET /api/cards/:name", () => {
       });
   });
 });
+
+describe("GET /api/topics/:topicid",()=>{
+  test("200: Responds with a single object with topic details for the topic_id passed.",()=>{
+    return request(app)
+    .get("/api/topics/1")
+    .expect(200)
+    .then(({body})=>{
+      const topic = body.topic;
+      expect(topic.topic_name).toBe("topic 1");
+      expect(topic.topic_id).toBe(1);
+      expect(topic).toMatchObject({
+        topic_id: expect.any(Number),
+        topic_name: expect.any(String),
+        education_id: expect.any(String),
+        subject_id: expect.any(Number)        
+      }); 
+    })
+  })
+
+  test("404: Responds with 'Resource Not Found' when given a valid Topic id that is not in the database",()=>{
+    return request(app)
+    .get("/api/topics/1000")
+    .expect(404)
+    .then(({body})=>{
+      expect(body.msg).toBe("Resource Not Found");
+    })
+  })
+
+
+  test("400: Responds with 'Bad request' when invalid topic_id passed.", () => {
+    return request(app)
+      .get("/api/topics/invalid")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request");
+      });
+  });
+})
