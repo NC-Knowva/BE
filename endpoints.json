@@ -41,7 +41,7 @@
           "username": "math_lover",
           "name": "Alice Smith",
           "avatar_img_url": "https://example.com/avatar1.jpg",
-          "education_id": "high_school",
+          "education_id": "GCSE",
           "settings": {"theme": "dark"},
           "calendar": {"events": []},
           "created_at": "2023-01-01T00:00:00.000Z"
@@ -57,7 +57,7 @@
         "username": "math_lover",
         "name": "Alice Smith",
         "avatar_img_url": "https://example.com/avatar1.jpg",
-        "education_id": "high_school",
+        "education_id": "GCSE",
         "settings": {"theme": "dark"},
         "calendar": {"events": []},
         "created_at": "2023-01-01T00:00:00.000Z"
@@ -66,7 +66,7 @@
   },
   "GET /api/study_groups": {
     "description": "Serves an array of all study groups",
-    "queries": ["topic", "filter_by"],
+    "queries": ["subject", "filter_by"],
     "exampleResponse": {
       "study_groups": [
         {
@@ -115,8 +115,8 @@
     "queries": ["filter_by"],
     "exampleResponse": {
       "education_levels": [
-        {"education": "high_school"},
-        {"education": "undergraduate"}
+        {"education": "GCSE"},
+        {"education": "A-level"}
       ]
     }
   },
@@ -141,14 +141,14 @@
       "username": "new_user",
       "name": "New User",
       "avatar_img_url": "https://example.com/new.jpg",
-      "education_id": "high_school"
+      "education_id": "GCSE"
     },
     "exampleResponse": {
       "user": {
         "username": "new_user",
         "name": "New User",
         "avatar_img_url": "https://example.com/new.jpg",
-        "education_id": "high_school",
+        "education_id": "GCSE",
         "created_at": "2023-01-15T12:00:00.000Z"
       }
     }
@@ -157,13 +157,13 @@
     "description": "Adds a new subject",
     "requestBody": {
       "subject_name": "Physics",
-      "education_id": "high_school"
+      "education_id": "GCSE"
     },
     "exampleResponse": {
       "subject": {
         "subject_id": 3,
         "subject_name": "Physics",
-        "education_id": "high_school"
+        "education_id": "GCSE"
       }
     }
   },
@@ -171,14 +171,14 @@
     "description": "Creates a new topic",
     "requestBody": {
       "topic_name": "Quantum Mechanics",
-      "education_id": "undergraduate",
+      "education_id": "A-level",
       "subject_id": 3
     },
     "exampleResponse": {
       "topic": {
         "topic_id": 5,
         "topic_name": "Quantum Mechanics",
-        "education_id": "undergraduate",
+        "education_id": "A-level",
         "subject_id": 3
       }
     }
