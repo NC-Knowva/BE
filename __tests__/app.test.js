@@ -532,3 +532,34 @@ describe("PATCH /users/:username",()=>{
     });
   })
 })
+
+
+describe("DELETE /api/users/:username",()=>{
+  test("204: Responds with no content, deletes the given user for the username",()=>{
+
+    return request(app)
+    .delete("/api/users/aclaricoats0")
+    .expect(204)
+    .then(({body})=>{
+      expect(body).toEqual({})
+    })
+  })
+
+  test("404: Responds with Resource not found error message for username that does not exist.",()=>{
+    return request(app)
+    .delete("/api/users/test")
+    .expect(404)
+    .then(({body})=>{
+      expect(body.msg).toBe("Resource Not Found")
+    })
+  })
+
+  test.skip("400: Responds with Bad request error message for invalid username.",()=>{
+    return request(app)
+    .delete("/api/users/9")
+    .expect(400)
+    .then(({body})=>{
+      expect(body.msg).toBe("Bad request.")
+    })
+  })
+})
