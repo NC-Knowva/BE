@@ -84,3 +84,13 @@ exports.updateUser = (username, name, avatar_img_url, education_id) => {
   .then(() => db.query(queryStr, [name, avatar_img_url, education_id, username]))
   .then(({ rows }) => rows[0]);
 };
+
+exports.deleteUser = (username) => {
+  const queryStr = `
+      DELETE FROM users
+      WHERE username = $1
+      RETURNING *;`;
+  
+  return checkExists("users", "username", username)
+  .then(() => db.query(queryStr, [username]));
+};
