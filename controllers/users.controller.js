@@ -1,4 +1,4 @@
-const { selectUsers, selectUserByUsername, selectMessagesByUsername, selectStudyGroupsByUsername, insertUser, updateUser, fetchUserFriends } = require("../models/users.model");
+const { selectUsers, selectUserByUsername, selectMessagesByUsername, selectStudyGroupsByUsername, insertUser, updateUser, fetchUserFriends, deleteUser } = require("../models/users.model");
 
 exports.getUsers = (req, res, next) => {
     selectUsers()
@@ -55,4 +55,12 @@ exports.patchUserByUsername = (req, res, next) => {
     updateUser(username, name, avatar_img_url, education_id)
         .then(user => res.status(200).send({ user }))
         .catch(err => next(err));
+};
+
+exports.deleteUserByUsername = (req, res, next) => {
+    const { username } = req.params;
+
+    deleteUser(username)
+    .then(() => res.status(204).send())
+    .catch(err => next(err));
 };

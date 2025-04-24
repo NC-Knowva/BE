@@ -68,16 +68,16 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         .then(() => {
             return db.query(`CREATE TABLE friends (
                 friend_id SERIAL PRIMARY KEY,
-                username VARCHAR(50) REFERENCES users(username),
-                friend VARCHAR(50) REFERENCES users(username),
+                username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
+                friend VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
                 created_at TIMESTAMP
                 )`)
         })
         .then(() => {
             return db.query(`CREATE TABLE message_activity (
             dm_id SERIAL PRIMARY KEY,
-            sender_username VARCHAR(50) REFERENCES users(username),
-            receiver_username VARCHAR(50) REFERENCES users(username),
+            sender_username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
+            receiver_username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
             body TEXT,
             created_at TIMESTAMP
             );`)
@@ -109,7 +109,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         .then(() => {
             return db.query(`CREATE TABLE card_pack (
             pack_id SERIAL PRIMARY KEY,
-            username VARCHAR(50) REFERENCES users(username) ,
+            username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
             topic_id INT REFERENCES topics(topic_id),
             name VARCHAR(150),
             description TEXT,
@@ -121,7 +121,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
         .then(() => {
             return db.query(`CREATE TABLE scoreboard (
             score_id SERIAL PRIMARY KEY,
-            username VARCHAR(50) REFERENCES users(username),
+            username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
             game_id INT REFERENCES games(game_id),
             topic_id INT REFERENCES topics(topic_id),
             subject_id INT REFERENCES subjects(subject_id),
@@ -133,7 +133,7 @@ const seed = ({ games, education_level, users, message_activity, scoreboard, stu
             return db.query(`CREATE TABLE users_group_junction (
                 users_group_id serial primary key,
                 role VARCHAR(50),
-                username VARCHAR(50) REFERENCES users(username),
+                username VARCHAR(50) REFERENCES users(username) ON DELETE CASCADE,
                 group_id INT REFERENCES study_group(group_id)
                 );`)
             })
