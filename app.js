@@ -12,6 +12,7 @@ const {
   getMessagesByUsername,
   getStudyGroupsByUsername,
   postUser,
+  patchUserByUsername,
 } = require("./controllers/users.controller");
 const {
   invalidPathController,
@@ -35,6 +36,8 @@ app.get("/api/users", getUsers);
 app.post("/api/users", postUser);
 
 app.get("/api/users/:username", getUserByUsername);
+
+app.patch("/api/users/:username", patchUserByUsername);
 
 app.get("/api/users/:username/messages", getMessagesByUsername);
 
